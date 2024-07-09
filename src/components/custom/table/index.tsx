@@ -1,37 +1,38 @@
 import { filterObjects } from "@/utils";
 import { useAntdTable } from "ahooks";
 import { Table as AntdTable, Button, Col, ConfigProvider, Form, Input, Row } from "antd";
-import { MyTableProps } from "./type";
+import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-const filters: any[] = [
-  { key: "id", label: "ID", type: "input" },
-  { key: "name", label: "姓名", type: "input" },
-  { key: "email", label: "邮箱", type: "input" },
-  { key: "phone", label: "手机号码", type: "input" },
-  { key: "gender", label: "性别", type: "input" },
-]
-
 const Table = (props: MyTableProps) => {
-  const { fetchData, exportFn, showResetButton = true, showSearchButton = true } = props;
+  const {
+    fetchData,
+    exportFn,
+    filters,
+    showResetButton = true,
+    showSearchButton = true,
+    defaultPageSize = 10,
+    showTotal = (total) => `共 ${total} 条`,
+    showQuickJumper = true,
+    showSizeChanger = true,
+  } = props;
+
   const [form] = Form.useForm();
   const [collapsed, setCollapsed] = useState(true);
 
-  const getTableData = async (query: any, formData?: object) => {
-    const params = filterObjects({ ...query, ...formData })
+  const getTableData = async (
+    { current, pageSize }: { current: number, pageSize: number },
+    formData?: object): Promise<Result> => {
+    const params = filterObjects({ current, pageSize, ...formData })
     console.log("🚀 ~ getTableData ~ params:", params)
-    return await fetchData(params).then(res => ({
-      total: res.info.results,
-      list: res.results,
-    }))
+    return await fetchData(params)
   }
 
-  const { tableProps, search, params } =
-    useAntdTable<{ total: number, list: any }, any>(getTableData, {
-      form,
-      defaultPageSize: 5
-    });
+  const { tableProps, search } = useAntdTable(getTableData, {
+    form,
+    defaultPageSize
+  });
 
   const { submit, reset } = search;
   const layout = {
@@ -46,7 +47,7 @@ const Table = (props: MyTableProps) => {
       }
     }}>
       <Form {...layout} layout="vertical" form={form} className="flex justify-between items-start">
-        <Row gutter={16} className={`w-4/5 ${collapsed && 'h-20'}`} >
+        <Row gutter={16} className={`w-[78%] ${collapsed && 'h-20 overflow-hidden'}`} >
           {filters.map((item) => (
             <Col span={6} key={item.key}>
               <Form.Item label={item.label} name={item.key}>
@@ -66,7 +67,7 @@ const Table = (props: MyTableProps) => {
           {exportFn && <Button className="ml-4" onClick={exportFn}>
             导出
           </Button>}
-          {filters.length > 4 && <Button type="link" className="p-0 ml-4" onClick={()=>setCollapsed(!collapsed)}>
+          {filters.length > 4 && <Button type="link" className="p-0 ml-4" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? '展开' : '收起'}
             <DownOutlined className={`${collapsed ? 'rotate-0' : 'rotate-180'}`} />
           </Button>}
@@ -77,14 +78,10 @@ const Table = (props: MyTableProps) => {
         {...tableProps}
         className="border-t-border border-t border-t-solid"
         pagination={{
-          pageSize: 10,
-          showSizeChanger: true,
-          // showQuickJumper: true,
-          showTotal: (total) => `共 ${total} 条`,
-          // onChange(page, pageSize) {
-          //   console.log('page', page, pageSize)
-          //   getTableData({ page, pageSize })
-          // },
+          pageSize: defaultPageSize,
+          showSizeChanger,
+          showQuickJumper,
+          showTotal,
         }}
       />
     </ConfigProvider >
