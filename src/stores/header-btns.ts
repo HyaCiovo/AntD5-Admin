@@ -11,6 +11,6 @@ interface BtnState {
 }
 
 export const useHeaderBtnsStore = create<BtnState>((set) => ({
-  headerBtns: [{ type: "primary", children: "按钮", key: "btn" }],
+  headerBtns: [],
   setHeaderBtns: (headerBtns) => set({ headerBtns }),
 }));

@@ -1,5 +1,5 @@
 import { MenusMap } from "@/config/menu";
-import { useBreadcrumbsStore } from "@/stores/breadcrumbs";
+import { useLayoutStore } from "@/stores/layout";
 import { Breadcrumb } from "antd";
 import {
   BreadcrumbItemType,
@@ -25,11 +25,7 @@ const itemRender = (
 };
 
 const MyBreadcrumbs = () => {
-  const { breadcrumbs } = useBreadcrumbsStore();
-
-  useEffect(() => {
-    console.log("breadcrumbs", breadcrumbs);
-  }, [breadcrumbs]);
+  const { breadcrumbs } = useLayoutStore();
 
   const items = breadcrumbs.map((item) => {
     return { title: MenusMap[item].label };

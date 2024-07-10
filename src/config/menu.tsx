@@ -1,4 +1,5 @@
-import { TeamOutlined } from "@ant-design/icons";
+import { SettingOutlined, TeamOutlined } from "@ant-design/icons";
+import { title } from "process";
 
 export const menus = [
   {
@@ -15,6 +16,23 @@ export const menus = [
         label: "权限管理",
         key: "permission_manage",
         path: "/auth",
+      },
+    ],
+  },
+  {
+    label: "应用配置",
+    icon: <SettingOutlined />,
+    key: "configs",
+    children: [
+      {
+        label: "路由配置",
+        key: "route_config",
+        path: "/route_config",
+      },
+      {
+        label: "图片配置",
+        key: "picture_config",
+        path: "/picture_config",
       },
     ],
   },
@@ -75,7 +93,7 @@ export function generateKeysByPath(path: string): string[] {
  * @param key 子菜单的key
  * @returns 父菜单的key 或 undefined 如果没有父菜单
  */
-function getParentKey(key: string): string | undefined {
+export function getParentKey(key: string): string | undefined {
   for (const menu of menus) {
     if (menu.children && menu.children.some((child) => child.key === key)) {
       return menu.key;

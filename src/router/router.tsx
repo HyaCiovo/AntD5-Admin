@@ -48,6 +48,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "route_config",
+        element: (
+          <LazyComponent
+            Children={React.lazy(() => import("@/pages/config-routes"))}
+          />
+        ),
+      },
+      {
+        path: "picture_config",
+        element: (
+          <LazyComponent
+            Children={React.lazy(() => import("@/pages/config-pictures"))}
+          />
+        ),
+      },
+      {
         path: "*",
         element: (
           <LazyComponent Children={React.lazy(() => import("@/pages/404"))} />

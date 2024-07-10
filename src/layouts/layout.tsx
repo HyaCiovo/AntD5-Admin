@@ -6,10 +6,12 @@ import { useMouse, useThrottle } from "ahooks";
 import { BtnProps, useHeaderBtnsStore } from "@/stores/header-btns";
 import { Outlet } from "react-router-dom";
 import MyBreadcrumbs from "./breadcrumbs";
+import { useLayoutStore } from "@/stores/layout";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
+  const { collapsed, setCollapsed } = useLayoutStore();
   const { headerBtns } = useHeaderBtnsStore();
   const renderBtns = (btns: BtnProps[]) => {
     return btns.map((btn) => {
@@ -22,8 +24,6 @@ const LayoutComponent = () => {
   const { elementX, elementY, elementW, elementH } = useMouse(
     controllerRef.current
   );
-
-  const [collapsed, setCollapsed] = React.useState(false);
 
   const show = React.useMemo(() => {
     if (
@@ -68,7 +68,7 @@ const LayoutComponent = () => {
                   !throttledShow && "hidden"
                 } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
           border border-solid border-[#E7E9E8] rounded-lg shadow-md`}
-                onClick={() => setCollapsed((value) => !value)}
+                onClick={() => setCollapsed(!collapsed)}
               >
                 <div
                   className={`border-[6px] border-solid border-transparent border-l-[#262626] 
