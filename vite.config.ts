@@ -56,7 +56,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       proxy: proxy(VITE_HTTP_API),
     },
     esbuild: {
-      pure: VITE_DROP_CONSOLE ? ["console","debugger"] : [],
+      drop: VITE_DROP_CONSOLE ? ["console", "debugger"] : [],
+      // pure: VITE_DROP_CONSOLE ? ["console","debugger"] : [],
     },
     build: {
       target: "modules",
