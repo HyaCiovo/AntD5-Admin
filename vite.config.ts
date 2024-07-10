@@ -55,6 +55,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       port: parseInt(VITE_PORT),
       proxy: proxy(VITE_HTTP_API),
     },
+    esbuild: {
+      pure: VITE_DROP_CONSOLE ? ["console","debugger"] : [],
+    },
     build: {
       target: "modules",
       outDir: "build",
@@ -62,7 +65,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       cssCodeSplit: true,
       assetsInlineLimit: 4096,
       sourcemap: true,
-      minify: "terser",
+      minify: "esbuild",
       chunkSizeWarningLimit: 500,
       emptyOutDir: true,
       manifest: false,
@@ -70,15 +73,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         output: {
           manualChunks: {
             react: ["react"],
-            "antd": ["antd"],
+            antd: ["antd"],
           },
-        },
-      },
-      // 传递给 Terser 的更多 minify 选项。
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          drop_console: VITE_DROP_CONSOLE,
         },
       },
     },
