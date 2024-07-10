@@ -64,7 +64,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       assetsDir: "assets",
       cssCodeSplit: true,
       assetsInlineLimit: 4096,
-      sourcemap: true,
+      sourcemap: false,
       minify: "esbuild",
       chunkSizeWarningLimit: 500,
       emptyOutDir: true,
