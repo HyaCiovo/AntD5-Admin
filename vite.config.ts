@@ -70,7 +70,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         output: {
           manualChunks: {
             react: ["react"],
-            "antd-mobile": ["antd-mobile"],
+            "antd": ["antd"],
           },
         },
       },
