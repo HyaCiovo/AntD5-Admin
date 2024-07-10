@@ -1,8 +1,20 @@
+import { MenusMap } from "@/config/menu";
+import { useBreadcrumbsStore } from "@/stores/breadcrumbs";
 import { Breadcrumb } from "antd";
-import { ItemType } from "antd/es/breadcrumb/Breadcrumb";
+import {
+  BreadcrumbItemType,
+  BreadcrumbSeparatorType,
+  ItemType,
+} from "antd/es/breadcrumb/Breadcrumb";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const itemRender = (route: ItemType, params: any, routes: ItemType[], paths: string[]) => {
+const itemRender = (
+  route: ItemType,
+  params: Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[],
+  routes: ItemType[],
+  paths: string[]
+) => {
   const isLast = route?.path === routes[routes.length - 1]?.path;
 
   return isLast ? (
@@ -10,24 +22,20 @@ const itemRender = (route: ItemType, params: any, routes: ItemType[], paths: str
   ) : (
     <Link to={`/${paths.join("/")}`}>{route.title}</Link>
   );
-}
+};
 
 const MyBreadcrumbs = () => {
+  const { breadcrumbs } = useBreadcrumbsStore();
 
-  return (
-    <Breadcrumb itemRender={itemRender} items={[{
-      title: 'Home',
-    },
-    {
-      title: <a href="">Application Center</a>,
-    },
-    {
-      title: <a href="">Application List</a>,
-    },
-    {
-      title: 'An Application',
-    },]} />
-  )
-}
+  useEffect(() => {
+    console.log("breadcrumbs", breadcrumbs);
+  }, [breadcrumbs]);
+
+  const items = breadcrumbs.map((item) => {
+    return { title: MenusMap[item].label };
+  });
+
+  return <Breadcrumb itemRender={itemRender} items={items} />;
+};
 
 export default MyBreadcrumbs;

@@ -5,17 +5,16 @@ import { tokenLoader } from "./loader";
 import { Spin } from "antd";
 
 interface LazyComponentProps {
-  Children: React.LazyExoticComponent<() => JSX.Element>,
-  layout?: boolean
+  Children: React.LazyExoticComponent<() => JSX.Element>;
+  layout?: boolean;
 }
 const LazyComponent = ({ Children, layout = false }: LazyComponentProps) => {
   return (
-    <React.Suspense fallback={<Loading />}>
+    <React.Suspense fallback={<Spin />}>
       <Children />
     </React.Suspense>
   );
 };
-
 
 export const router = createBrowserRouter([
   {
@@ -24,25 +23,36 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <LazyComponent layout Children={React.lazy(() => import("@/layouts/layout"))} />,
+    element: (
+      <LazyComponent
+        layout
+        Children={React.lazy(() => import("@/layouts/layout"))}
+      />
+    ),
     loader: tokenLoader,
     children: [
       {
         index: true,
-        element: <Navigate to="/user" />,
+        element: <Navigate to="/role" />,
       },
       {
-        path: "user",
-        element: <LazyComponent Children={React.lazy(() => import("@/pages/users"))} />,
+        path: "role",
+        element: (
+          <LazyComponent Children={React.lazy(() => import("@/pages/role"))} />
+        ),
       },
       {
         path: "auth",
-        element: <LazyComponent Children={React.lazy(() => import("@/pages/auth"))} />,
+        element: (
+          <LazyComponent Children={React.lazy(() => import("@/pages/auth"))} />
+        ),
       },
       {
         path: "*",
-        element: <LazyComponent Children={React.lazy(() => import("@/pages/404"))} />,
-      }
+        element: (
+          <LazyComponent Children={React.lazy(() => import("@/pages/404"))} />
+        ),
+      },
     ],
   },
 ]);
