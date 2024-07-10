@@ -18,10 +18,10 @@ const LayoutComponent = () => {
       return <Button key={key} {...props} />
     })
   }
-  const { from, to } = useOnRoutesChange(() => setHeaderBtns([])) // clear header buttons when routes change
+  useOnRoutesChange(() => setHeaderBtns([])) // clear header buttons when routes change
 
   const controllerRef = React.useRef(null)
-  const { elementX, elementY, elementW, elementH} = useMouse(controllerRef.current);
+  const { elementX, elementY, elementW, elementH } = useMouse(controllerRef.current);
 
   const [collapsed, setCollapsed] = React.useState(false);
 

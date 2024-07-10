@@ -70,6 +70,9 @@ module.exports = {
   content: ['./src/**/*.tsx'],
   important: true,
   theme: {
+    fontFamily: {
+      comic: ['Comic Sans MS', 'cursiveInter'],
+    },
     extend: {
       colors: themeColor,
       boxShadow: {

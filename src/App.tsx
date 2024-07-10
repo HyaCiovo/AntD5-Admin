@@ -1,6 +1,6 @@
 
 import { RouterProvider } from 'react-router-dom'
-import { router } from './router'
+import { router } from '@/router/router'
 import { ConfigProvider } from 'antd'
 import AntdTheme from 'config/theme/antd-theme'
 import zhCN from 'antd/locale/zh_CN'

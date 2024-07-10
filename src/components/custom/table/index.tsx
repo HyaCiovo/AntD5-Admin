@@ -14,7 +14,7 @@ const Table = (props: MyTableProps) => {
     showSearchButton = true,
     defaultPageSize = 10,
     showTotal = (total) => `共 ${total} 条`,
-    showQuickJumper = true,
+    showQuickJumper = false,
     showSizeChanger = true,
   } = props;
 
