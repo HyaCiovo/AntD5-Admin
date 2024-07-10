@@ -1,11 +1,12 @@
 import { filterObjects } from "@/utils";
 import { useAntdTable } from "ahooks";
-import { Table as AntdTable, Button, Col, ConfigProvider, Form, Input, Row } from "antd";
+import { Table, Button, Col, ConfigProvider, Form, Row } from "antd";
 import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import Filter from "./filter";
 
-const Table = (props: MyTableProps) => {
+const TableWithFilters = (props: MyTableProps) => {
   const {
     fetchData,
     exportFn,
@@ -46,14 +47,18 @@ const Table = (props: MyTableProps) => {
         Form: { verticalLabelPadding: '0 0 4px' }
       }
     }}>
-      <Form {...layout} layout="vertical" form={form} className="flex justify-between items-start">
+      <Form {...layout} layout="vertical" form={form} className="flex justify-between items-start"
+        onValuesChange={(_, values) => {
+          console.log(form.getFieldValue("birthdate"))
+        }}
+      >
         <Row gutter={16} className={`w-[78%] ${collapsed && 'h-20 overflow-hidden'}`} >
           {filters.map((item) => (
-            <Col span={6} key={item.key}>
-              <Form.Item label={item.label} name={item.key}>
-                {item.type === "input" &&
-                  <Input placeholder={item?.placeholder || `请输入${item.label}`} />}
-              </Form.Item>
+            <Col span={item.type === "RangePicker" ? 10 : 6} key={item.name}>
+              {item.type === 'Input' && <Filter.InputFilter {...item} />}
+              {item.type === 'Select' && <Filter.SelectFilter {...item} />}
+              {item.type === 'DatePicker' && <Filter.DateFilter {...item} />}
+              {item.type === 'RangePicker' && <Filter.RangeFilter {...item} />}
             </Col>
           ))}
         </Row>
@@ -73,7 +78,7 @@ const Table = (props: MyTableProps) => {
           </Button>}
         </Row>
       </Form>
-      <AntdTable
+      <Table
         {...props}
         {...tableProps}
         className="border-t-border border-t border-t-solid"
@@ -88,4 +93,4 @@ const Table = (props: MyTableProps) => {
   );
 }
 
-export default Table;
+export default TableWithFilters;

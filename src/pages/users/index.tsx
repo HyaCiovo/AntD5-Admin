@@ -1,5 +1,5 @@
 import { fetchUsers } from "@/apis/user";
-import Table from "@/components/custom/table";
+import TableWithFilters from "@/components/custom/table";
 import { Result } from "@/components/custom/table/type";
 
 const columns = [
@@ -18,15 +18,26 @@ const columns = [
   {
     title: '性别',
     dataIndex: 'gender',
+    render: (text: string) => {
+      return text === 'male' ? '男' : '女';
+    }
   },
 ];
 
-const filters: any[] = [
-  { key: "id", label: "ID", type: "input" },
-  { key: "name", label: "姓名", type: "input" },
-  { key: "email", label: "邮箱", type: "input" },
-  { key: "phone", label: "手机号码", type: "input" },
-  { key: "gender", label: "性别", type: "input" },
+const filters = [
+  { name: "id", label: "ID", type: "Input" },
+  {
+    name: "gender", label: "性别", type: "Select", initialValue: "",
+    options: [
+      { value: "", label: "全部" },
+      { value: "male", label: "男" },
+      { value: "female", label: "女" },
+    ]
+  },
+  { name: "name", label: "姓名", type: "Input" },
+  { name: "email", label: "邮箱", type: "Input" },
+  { name: "phone", label: "手机号码", type: "Input" },
+  { name: "birthdate", label: "出生日期", type: "RangePicker", format: "YYYY-MM-DD" },
 ]
 
 const Component = () => {
@@ -35,7 +46,7 @@ const Component = () => {
     return { list: res.results, total: res.info.results };
   }
 
-  return <Table
+  return <TableWithFilters
     columns={columns}
     filters={filters}
     rowKey={(record: any) => record.email}

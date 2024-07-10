@@ -11,13 +11,14 @@ const getToken = (): Promise<number> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Math.random());
-    }, 2000);
+    }, 1000);
   });
 };
 
 export const tokenLoader = async () => {
   const num = await getToken();
-  console.log(num);
+  // console.log(num);
+  return null;
   //如果随机数大于0.5则重定向到登录页
   if (num > 0.7) {
     return redirect("/login");
