@@ -19,9 +19,17 @@ interface LayoutState {
   setOpenKeys: (openKeys: Array<string>) => void;
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
-  headerBtns: Array<BtnProps>;
-  setHeaderBtns: (btns: BtnProps[]) => void;
 }
+
+interface NormalLayoutState {
+  headerBtns: Array<BtnProps>;
+  setHeaderBtns: (headerBtns: Array<BtnProps>) => void;
+}
+
+export const useNormalLayoutStore = create<NormalLayoutState>((set) => ({
+  headerBtns: [],
+  setHeaderBtns: (headerBtns) => set({ headerBtns }),
+}))
 
 export const useLayoutStore = create<LayoutState>()(
   persist(
@@ -33,8 +41,6 @@ export const useLayoutStore = create<LayoutState>()(
       setOpenKeys: (openKeys: Array<string>) => set({ openKeys }),
       collapsed: false,
       setCollapsed: (collapsed: boolean) => set({ collapsed }),
-      headerBtns: [],
-      setHeaderBtns: (headerBtns) => set({ headerBtns }),
     }),
     {
       name: "layout-store",

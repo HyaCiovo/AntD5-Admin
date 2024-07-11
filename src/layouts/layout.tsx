@@ -5,34 +5,43 @@ import SiderMenu from "./sider-menu";
 import { useMouse, useThrottle } from "ahooks";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import MyBreadcrumbs from "./breadcrumbs";
-import { useLayoutStore, BtnProps } from "@/stores/layout";
+import {
+  useLayoutStore,
+  BtnProps,
+  useNormalLayoutStore,
+} from "@/stores/layout";
 import { User, useUserStore } from "@/stores/user";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
-  const { collapsed, setCollapsed, headerBtns } = useLayoutStore();
+  const { collapsed, setCollapsed } = useLayoutStore();
+  const { headerBtns } = useNormalLayoutStore();
   const { setUser, user } = useUserStore();
 
   const loaderData = useLoaderData() as Partial<User>;
 
   useEffect(() => {
-    setUser(loaderData)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setUser(loaderData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const navigate = useNavigate();
   const renderBtns = (btns: BtnProps[]) => {
     return btns.map((btn) => {
-      const { key, url, onClick, ...props } = btn;
+      const { key, url, onClick, iconPosition = "end", ...props } = btn;
       const handleClick = (e: any) => {
         url && navigate(url);
         onClick && onClick(e);
       };
-      return <Button
-        key={key}
-        onClick={handleClick}
-        {...props} />;
+      return (
+        <Button
+          key={key}
+          iconPosition={iconPosition}
+          onClick={handleClick}
+          {...props}
+        />
+      );
     });
   };
 
@@ -80,15 +89,17 @@ const LayoutComponent = () => {
               ref={controllerRef}
             >
               <div
-                className={`mt-48 ${!throttledShow && "hidden"
-                  } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
+                className={`mt-48 ${
+                  !throttledShow && "hidden"
+                } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
           border border-solid border-[#E7E9E8] rounded-lg shadow-md`}
                 onClick={() => setCollapsed(!collapsed)}
               >
                 <div
                   className={`border-[6px] border-solid border-transparent border-l-[#262626] 
-               ${collapsed ? "rotate-0 ml-[1px]" : "rotate-180 -ml-[7px]"
-                    } inline-block self-center`}
+               ${
+                 collapsed ? "rotate-0 ml-[1px]" : "rotate-180 -ml-[7px]"
+               } inline-block self-center`}
                 />
               </div>
             </div>

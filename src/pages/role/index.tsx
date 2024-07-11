@@ -3,6 +3,7 @@ import TableWithFilters from "@/components/custom/table";
 import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";
 import { BtnProps } from "@/stores/layout";
+import { ExportOutlined, UserAddOutlined } from "@ant-design/icons";
 
 const columns = [
   {
@@ -55,6 +56,7 @@ const Component = () => {
       children: "ADD",
       type: "primary",
       url: "/role/add",
+      icon: <UserAddOutlined />,
     },
     {
       key: "export",
@@ -62,6 +64,7 @@ const Component = () => {
       onClick: () => {
         console.log("export all");
       },
+      icon: <ExportOutlined />,
     },
   ];
 
@@ -72,7 +75,7 @@ const Component = () => {
     // return { list: res.results, total: res.info.results };
     return new Promise((resolve) => {
       // setTimeout(() => {
-        resolve({ list: res.results, total: res.info.results });
+      resolve({ list: res.results, total: res.info.results });
       // }, 1500);
     });
   };

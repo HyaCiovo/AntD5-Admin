@@ -8,7 +8,7 @@ const getUserInfo = (): Promise<User> => {
       resolve({
         username: "HyaCinOvo",
         avatar: "/avatar/hyacinth_avatar.jpg",
-        role: "admin",
+        role: "Administrator",
         email: "hyacinth@gmail.com",
         phone: "15312347956",
       });

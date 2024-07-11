@@ -1,9 +1,9 @@
 import { HomeOutlined, SettingOutlined, TeamOutlined } from "@ant-design/icons";
-import { title } from "process";
+import path from "path";
 import { ReactNode } from "react";
 
 const flattenFirstLevelChildren = (menus: any[]): any[] => {
-  return menus.map(menu => {
+  return menus.map((menu) => {
     const newMenu = { ...menu };
     if (newMenu.children) {
       newMenu.children = newMenu.children.map((child: any) => {
@@ -14,7 +14,7 @@ const flattenFirstLevelChildren = (menus: any[]): any[] => {
     }
     return newMenu;
   });
-}
+};
 
 /**
  * 将菜单列表转换为键值对映射的对象，便于快速查找和使用。
@@ -32,7 +32,10 @@ const menuListToMap = (list: any[]) => {
    */
   function buildBreadcrumbs(item: any, parentBreadcrumbs: any[] = []) {
     /* 构建当前菜单项的面包屑数组。 */
-    const breadcrumbs = [...parentBreadcrumbs, { title: item.label, path: item.path }];
+    const breadcrumbs = [
+      ...parentBreadcrumbs,
+      { title: item.label, path: item.path },
+    ];
     /* 创建当前菜单项的映射条目，包括label、path和breadCrumbs。 */
     const entry: any = {
       label: item.label,
@@ -41,7 +44,7 @@ const menuListToMap = (list: any[]) => {
     };
 
     /* 如果当前菜单项有path，则添加到entry中。 */
-    if ('path' in item) {
+    if ("path" in item) {
       entry.path = item.path;
     }
 
@@ -50,12 +53,14 @@ const menuListToMap = (list: any[]) => {
 
     /* 如果当前菜单项有子菜单，则递归处理子菜单。 */
     if (Array.isArray(item.children)) {
-      item.children.forEach((subItem: any) => buildBreadcrumbs(subItem, breadcrumbs));
+      item.children.forEach((subItem: any) =>
+        buildBreadcrumbs(subItem, breadcrumbs)
+      );
     }
   }
 
   /* 遍历菜单列表，调用buildBreadcrumbs处理每个菜单项。 */
-  list.forEach(item => buildBreadcrumbs(item));
+  list.forEach((item) => buildBreadcrumbs(item));
 
   /* 返回转换后的菜单映射对象。 */
   return map;
@@ -63,7 +68,7 @@ const menuListToMap = (list: any[]) => {
 
 /**
  * 创建一个菜单项对象。
- * 
+ *
  * @param key 菜单项的唯一标识符。用于在代码中引用这个菜单项。
  * @param label 菜单项的显示文本。这是用户在界面上看到的文本。
  * @param children 菜单项的子项。可选参数，用于创建多级菜单结构。
@@ -80,16 +85,22 @@ const setMenuItem = (key: string, label: ReactNode, children?: any[]) => {
 
 /**
  * 创建子菜单项的配置对象。
- * 
+ *
  * @param key 菜单项的唯一标识符。用于在代码中引用或选择特定的菜单项。
  * @param label 菜单项的显示文本。这是用户界面中实际显示的文本。
  * @param icon 菜单项的图标。这个图标通常与菜单项的功能或类型相关联。
  * @param children 可选参数，表示当前菜单项下的子菜单项。这是一个数组，每个元素都是一个子菜单项的配置对象。
  * @returns 返回一个包含菜单项配置的对象。这个对象可以直接用于渲染菜单或作为菜单结构的一部分。
  */
-const setSubMenuItem = (key: string, label: ReactNode, icon: ReactNode, children?: any[]) => {
+const setSubMenuItem = (
+  key: string,
+  label: ReactNode,
+  icon: ReactNode,
+  children?: any[]
+) => {
   return {
     key,
+    path: key,
     label,
     icon,
     children,
@@ -97,7 +108,7 @@ const setSubMenuItem = (key: string, label: ReactNode, icon: ReactNode, children
 };
 
 export const MenusBeforeFilter = [
-  setSubMenuItem("home", "Home", <HomeOutlined />),
+  setSubMenuItem("/guide", "Guider", <HomeOutlined />),
   setSubMenuItem("user", "UserManage", <TeamOutlined />, [
     setMenuItem("/role", "Role", [
       setMenuItem("/role/add", "Add"),
