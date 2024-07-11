@@ -1,11 +1,11 @@
 import { useUserStore } from "@/stores/user";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, MenuProps, Space, theme } from "antd";
-import { VITE_APP_LOGO, VITE_APP_TITLE } from "config/constant";
+import { Avatar, Button, Dropdown, MenuProps, theme } from "antd";
+import { ANTD_LOGO, VITE_APP_TITLE, VITE_LOGO } from "config/constant";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const { useToken } = theme
+const { useToken } = theme;
 const Header = () => {
   const { token } = useToken();
 
@@ -18,7 +18,7 @@ const Header = () => {
 
   const menuStyle: React.CSSProperties = {
     padding: 4,
-    boxShadow: 'none',
+    boxShadow: "none",
   };
   const { user, removeUser } = useUserStore();
   const handleLogout = () => {
@@ -36,10 +36,14 @@ const Header = () => {
   return (
     <div className="bg-primary w-screen flex h-16 px-6 text-white justify-between select-none">
       <div className="flex items-center font-comic text-xl">
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center -mt-1">
           <div className="relative">
-            <img src={"/favicon.png"} alt="logo" className="h-9" />
-            <img src={VITE_APP_LOGO} alt="logo" className="h-4 absolute -right-1 bottom-0" />
+            <img src={"/logo.png"} alt="logo" className="h-9" />
+            {/* <img
+              src={ANTD_LOGO}
+              alt="logo"
+              className="h-4 absolute -right-1 bottom-0"
+            /> */}
           </div>
           <h1 className="font-semibold ml-3">Ant Design 5</h1>
         </Link>
@@ -51,15 +55,19 @@ const Header = () => {
           menu={{ items }}
           placement="bottomRight"
           getPopupContainer={() => document.body}
-          dropdownRender={(menu) => <div style={contentStyle}>
-            <div className="p-1 font-comic">
-              <div>{user.username}</div>
-              <div>{user.role}</div>
-              <div>{user.email || user.phone}</div>
+          dropdownRender={(menu) => (
+            <div style={contentStyle}>
+              <div className="p-1 font-comic">
+                <div>{user.username}</div>
+                <div>{user.role}</div>
+                <div>{user.email || user.phone}</div>
+              </div>
+              {/* <Divider style={{ margin: 0 }} /> */}
+              {React.cloneElement(menu as React.ReactElement, {
+                style: menuStyle,
+              })}
             </div>
-            {/* <Divider style={{ margin: 0 }} /> */}
-            {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-          </div>}
+          )}
         >
           <Avatar
             size={36}

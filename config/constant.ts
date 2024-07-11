@@ -2,9 +2,12 @@
 export const VITE_BASE_PATH = "./";
 // 应用名称
 export const VITE_APP_TITLE = "Admin";
-// 应用Logo
-export const VITE_APP_LOGO =
+// AntDesign Logo
+export const ANTD_LOGO =
   "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg";
+// Vite Logo
+export const VITE_LOGO =
+  "https://vitejs.dev/logo.svg";
 // 开启包依赖分析 可视化
 export const VITE_APP_ANALYZE = false;
 // 开启Gzip压缩
