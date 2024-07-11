@@ -26,7 +26,7 @@ const TableWithFilters = (props: MyTableProps) => {
     { current, pageSize }: { current: number, pageSize: number },
     formData?: object): Promise<Result> => {
     const params = filterObjects({ current, pageSize, ...formData })
-    console.log("🚀 ~ getTableData ~ params:", params)
+    // console.log("🚀 ~ getTableData ~ params:", params)
     return await fetchData(params)
   }
 
@@ -47,10 +47,10 @@ const TableWithFilters = (props: MyTableProps) => {
         Form: { verticalLabelPadding: '0 0 4px' }
       }
     }}>
-      <Form {...layout} layout="vertical" form={form} className="flex justify-between items-start"
-        onValuesChange={(_, values) => {
-          console.log(form.getFieldValue("birthdate"))
-        }}
+      <Form {...layout}
+        layout="vertical"
+        form={form}
+        className="flex justify-between items-start"
       >
         <Row gutter={16} className={`w-[78%] ${collapsed && 'h-20 overflow-hidden'}`} >
           {filters.map((item) => (
@@ -81,7 +81,7 @@ const TableWithFilters = (props: MyTableProps) => {
       <Table
         {...props}
         {...tableProps}
-        className="border-t-border border-t border-t-solid"
+        className="border-t-border border-t border-t-solid min-h-[800px]"
         pagination={{
           pageSize: defaultPageSize,
           showSizeChanger,

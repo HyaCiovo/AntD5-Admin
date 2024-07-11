@@ -3,20 +3,27 @@ import MyHeader from "./header";
 import React from "react";
 import SiderMenu from "./sider-menu";
 import { useMouse, useThrottle } from "ahooks";
-import { BtnProps, useHeaderBtnsStore } from "@/stores/header-btns";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import MyBreadcrumbs from "./breadcrumbs";
-import { useLayoutStore } from "@/stores/layout";
+import { useLayoutStore, BtnProps } from "@/stores/layout";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
-  const { collapsed, setCollapsed } = useLayoutStore();
-  const { headerBtns } = useHeaderBtnsStore();
+  const { collapsed, setCollapsed, headerBtns } = useLayoutStore();
+
+  const navigate = useNavigate();
   const renderBtns = (btns: BtnProps[]) => {
     return btns.map((btn) => {
-      const { key, ...props } = btn;
-      return <Button key={key} {...props} />;
+      const { key, url, onClick, ...props } = btn;
+      const handleClick = (e: any) => {
+        url && navigate(url);
+        onClick && onClick(e);
+      };
+      return <Button
+        key={key}
+        onClick={handleClick}
+        {...props} />;
     });
   };
 
@@ -64,17 +71,15 @@ const LayoutComponent = () => {
               ref={controllerRef}
             >
               <div
-                className={`mt-48 ${
-                  !throttledShow && "hidden"
-                } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
+                className={`mt-48 ${!throttledShow && "hidden"
+                  } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
           border border-solid border-[#E7E9E8] rounded-lg shadow-md`}
                 onClick={() => setCollapsed(!collapsed)}
               >
                 <div
                   className={`border-[6px] border-solid border-transparent border-l-[#262626] 
-               ${
-                 collapsed ? "rotate-0 ml-[1px]" : "rotate-180 -ml-[7px]"
-               } inline-block self-center`}
+               ${collapsed ? "rotate-0 ml-[1px]" : "rotate-180 -ml-[7px]"
+                    } inline-block self-center`}
                 />
               </div>
             </div>

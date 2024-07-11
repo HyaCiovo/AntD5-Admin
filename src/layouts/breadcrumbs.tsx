@@ -1,4 +1,4 @@
-import { MenusMap } from "@/config/menu";
+import { MenusMap } from "@/router/menu";
 import { useLayoutStore } from "@/stores/layout";
 import { Breadcrumb } from "antd";
 import {
@@ -6,7 +6,6 @@ import {
   BreadcrumbSeparatorType,
   ItemType,
 } from "antd/es/breadcrumb/Breadcrumb";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const itemRender = (
@@ -27,8 +26,8 @@ const itemRender = (
 const MyBreadcrumbs = () => {
   const { breadcrumbs } = useLayoutStore();
 
-  const items = breadcrumbs.map((item) => {
-    return { title: MenusMap[item].label };
+  const items = breadcrumbs.map((title) => {
+    return { title };
   });
 
   return <Breadcrumb itemRender={itemRender} items={items} />;

@@ -2,7 +2,7 @@ import { fetchUsers } from "@/apis/user";
 import TableWithFilters from "@/components/custom/table";
 import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";
-import { BtnProps } from "@/stores/header-btns";
+import { BtnProps } from "@/stores/layout";
 
 const columns = [
   {
@@ -56,9 +56,7 @@ const Component = () => {
       key: "add",
       children: "添加",
       type: "primary",
-      onClick: () => {
-        console.log("add");
-      },
+      url: "/role/add",
     },
     {
       key: "export",
@@ -73,7 +71,12 @@ const Component = () => {
 
   const fetchData = async (params?: any): Promise<Result> => {
     const res = await fetchUsers(params);
-    return { list: res.results, total: res.info.results };
+    // return { list: res.results, total: res.info.results };
+    return new Promise((resolve) => {
+      // setTimeout(() => {
+        resolve({ list: res.results, total: res.info.results });
+      // }, 1500);
+    });
   };
 
   return (

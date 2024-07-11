@@ -1,21 +1,23 @@
-import { BtnProps, useHeaderBtnsStore } from "@/stores/header-btns";
+import { useLayoutStore, BtnProps } from "@/stores/layout";
 import { useEffect } from "react";
 
 /**
  * 使用自定义头部按钮。
- *
- * 该钩子用于在组件中注入并更新页面头部的按钮配置。它通过调用`useHeaderBtnsStore`中的`setHeaderBtns`方法来实现。
- * 主要用于在不同页面或组件中动态设置头部按钮，以实现页面功能的定制和交互。
- *
- * @param Buttons - 按钮属性数组。每个元素应包含按钮的相关信息，如文本、图标、点击事件等。
+ * 
+ * 该钩子用于设置页面头部的按钮配置。它通过调用`useLayoutStore`中的`setHeaderBtns`方法来实现。
+ * 参数`Buttons`是一个包含按钮属性的数组，用于定义头部按钮的布局和行为。
+ * 
+ * @param Buttons 按钮属性数组，包含所有头部按钮的配置。
  */
 export const useHeaderBtns = (Buttons: BtnProps[]) => {
-  // 从useHeaderBtnsStore钩子中获取设置头部按钮的方法
-  const { setHeaderBtns } = useHeaderBtnsStore();
+  // 从`useLayoutStore`中获取设置头部按钮的方法
+  const { setHeaderBtns } = useLayoutStore();
 
-  // 在组件挂载时设置头部按钮，并在组件卸载时清除头部按钮配置
+  // 在组件挂载时设置头部按钮，组件卸载时清除头部按钮
   useEffect(() => {
     setHeaderBtns(Buttons);
+    // 返回一个清理函数，用于在组件卸载时清除头部按钮配置
     return () => setHeaderBtns([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

@@ -1,17 +1,11 @@
 import { redirect } from "react-router-dom";
 
-export const layoutLoader = () => {
-  return {
-    title: "Dashboard",
-  };
-};
-
 /* 模拟网络接口 */
 const getToken = (): Promise<number> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Math.random());
-    }, 1000);
+    }, 3000);
   });
 };
 
