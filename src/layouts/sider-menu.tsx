@@ -16,16 +16,9 @@ const SiderMenu: React.FC = () => {
   const navigate = useNavigate();
   const onSelect = (menu: any) => {
     navigate(MenusMap[menu.key].path as string);
-    // setBreadcrumbs(menu.keyPath.reverse());
   };
 
   const { pathname } = useLocation();
-
-  React.useEffect(() => {
-    console.log(MenusBeforeFilter)
-    console.log(MenusMap)
-    console.log(menus)
-  }, []);
 
   React.useEffect(() => {
     if (!pathname) return;

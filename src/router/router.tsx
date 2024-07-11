@@ -35,6 +35,7 @@ export const routes = [
   },
   {
     path: "/",
+    loader: tokenLoader,
     element: <LazyComponent layout Children={React.lazy(() => import("@/layouts/layout"))} />,
     children: [
       {

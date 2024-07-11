@@ -11,7 +11,7 @@ import '@/styles/global.less'
 const App = () => {
   dayjs.locale('zh-cn')
   return (
-    <ConfigProvider locale={zhCN} theme={AntdTheme}>
+    <ConfigProvider theme={AntdTheme}>
       <RouterProvider router={router} />
     </ConfigProvider>
   )

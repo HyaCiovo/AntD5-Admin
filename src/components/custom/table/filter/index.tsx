@@ -18,7 +18,7 @@ const InputFilter = (props: InputFilterProps) => {
   // 返回一个Form.Item组件，其中包含一个Input输入框，Input输入框具有placeholder和allowClear属性
   return <Form.Item {...otherProps}>
     <Input
-      placeholder={placeholder || `请输入${otherProps.label}`}
+      placeholder={placeholder || `Enter ${otherProps.label}`}
       allowClear />
   </Form.Item>
 };

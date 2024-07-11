@@ -6,23 +6,20 @@ import { BtnProps } from "@/stores/layout";
 
 const columns = [
   {
-    title: "姓名",
+    title: "Name",
     dataIndex: ["name", "last"],
   },
   {
-    title: "邮箱",
+    title: "Email",
     dataIndex: "email",
   },
   {
-    title: "手机号码",
+    title: "Phone",
     dataIndex: "phone",
   },
   {
-    title: "性别",
+    title: "Gender",
     dataIndex: "gender",
-    render: (text: string) => {
-      return text === "male" ? "男" : "女";
-    },
   },
 ];
 
@@ -30,21 +27,22 @@ const filters = [
   { name: "id", label: "ID", type: "Input" },
   {
     name: "gender",
-    label: "性别",
+    label: "Gender",
     type: "Select",
     initialValue: "",
     options: [
-      { value: "", label: "全部" },
-      { value: "male", label: "男" },
-      { value: "female", label: "女" },
+      { value: "", label: "All" },
+      { value: "male", label: "Male" },
+      { value: "female", label: "Female" },
+      { value: "other", label: "Other" },
     ],
   },
-  { name: "name", label: "姓名", type: "Input" },
-  { name: "email", label: "邮箱", type: "Input" },
-  { name: "phone", label: "手机号码", type: "Input" },
+  { name: "name", label: "Name", type: "Input" },
+  { name: "email", label: "Email", type: "Input" },
+  { name: "phone", label: "Phone", type: "Input" },
   {
     name: "birthdate",
-    label: "出生日期",
+    label: "Birth",
     type: "RangePicker",
     format: "YYYY-MM-DD",
   },
@@ -54,13 +52,13 @@ const Component = () => {
   const headerBtns: BtnProps[] = [
     {
       key: "add",
-      children: "添加",
+      children: "ADD",
       type: "primary",
       url: "/role/add",
     },
     {
       key: "export",
-      children: "导出全部",
+      children: "EXPORT ALL",
       onClick: () => {
         console.log("export all");
       },

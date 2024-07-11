@@ -97,19 +97,19 @@ const setSubMenuItem = (key: string, label: ReactNode, icon: ReactNode, children
 };
 
 export const MenusBeforeFilter = [
-  setSubMenuItem("home", "首页", <HomeOutlined />),
-  setSubMenuItem("user", "用户管理", <TeamOutlined />, [
-    setMenuItem("/role", "角色管理", [
-      setMenuItem("/role/add", "添加角色"),
-      setMenuItem("/role/edit", "编辑角色"),
+  setSubMenuItem("home", "Home", <HomeOutlined />),
+  setSubMenuItem("user", "UserManage", <TeamOutlined />, [
+    setMenuItem("/role", "Role", [
+      setMenuItem("/role/add", "Add"),
+      setMenuItem("/role/edit", "Edit"),
     ]),
-    setMenuItem("/permission", "权限管理"),
+    setMenuItem("/permission", "Permission"),
   ]),
-  setSubMenuItem("config", "应用配置", <SettingOutlined />, [
-    setMenuItem("/route_config", "路由配置"),
-    setMenuItem("/picture_config", "图片配置", [
-      setMenuItem("/picture_upload", "图片上传"),
-      setMenuItem("/picture_list", "图片列表"),
+  setSubMenuItem("config", "ConfigManage", <SettingOutlined />, [
+    setMenuItem("/route_config", "Routes"),
+    setMenuItem("/picture_config", "Pictures", [
+      setMenuItem("/picture_upload", "Upload"),
+      setMenuItem("/picture_list", "List"),
     ]),
   ]),
 ];

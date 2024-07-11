@@ -14,7 +14,7 @@ const TableWithFilters = (props: MyTableProps) => {
     showResetButton = true,
     showSearchButton = true,
     defaultPageSize = 10,
-    showTotal = (total) => `共 ${total} 条`,
+    showTotal = (total) => `Total ${total}`,
     showQuickJumper = false,
     showSizeChanger = true,
   } = props;
@@ -52,7 +52,7 @@ const TableWithFilters = (props: MyTableProps) => {
         form={form}
         className="flex justify-between items-start"
       >
-        <Row gutter={16} className={`w-[78%] ${collapsed && 'h-20 overflow-hidden'}`} >
+        <Row gutter={16} className={`w-[76%] ${collapsed && 'h-20 overflow-hidden'}`} >
           {filters.map((item) => (
             <Col span={item.type === "RangePicker" ? 10 : 6} key={item.name}>
               {item.type === 'Input' && <Filter.InputFilter {...item} />}
@@ -62,18 +62,18 @@ const TableWithFilters = (props: MyTableProps) => {
             </Col>
           ))}
         </Row>
-        <Row justify="end" align="middle" className="mt-[26px]">
+        <Row justify="end" align="middle" gutter={16} className="mt-[26px] text-nowrap">
           {showSearchButton && <Button type="primary" onClick={submit}>
-            查询
+            SEARCH
           </Button>}
-          {showResetButton && <Button onClick={reset} className="ml-4">
-            重置
+          {showResetButton && <Button onClick={reset} className="ml-2">
+            RESET
           </Button>}
-          {exportFn && <Button className="ml-4" onClick={exportFn}>
-            导出
+          {exportFn && <Button className="ml-2" onClick={exportFn}>
+            EXPORT
           </Button>}
-          {filters.length > 4 && <Button type="link" className="p-0 ml-4" onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? '展开' : '收起'}
+          {filters.length > 4 && <Button type="link" className="p-0 ml-2" onClick={() => setCollapsed(!collapsed)}>
+            {collapsed ? 'Expand' : 'Collapse'}
             <DownOutlined className={`${collapsed ? 'rotate-0' : 'rotate-180'}`} />
           </Button>}
         </Row>
@@ -81,7 +81,7 @@ const TableWithFilters = (props: MyTableProps) => {
       <Table
         {...props}
         {...tableProps}
-        className="border-t-border border-t border-t-solid min-h-[800px]"
+        className="border-t-border border-t border-t-solid"
         pagination={{
           pageSize: defaultPageSize,
           showSizeChanger,

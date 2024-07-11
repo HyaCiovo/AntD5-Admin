@@ -1,21 +1,27 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-interface User {
-  nickname: string;
+export interface User {
   username: string;
   email: string;
-  password: string;
   avatar: string;
+  role: string;
+  phone: string;
 }
 
 interface UserState {
   user: Partial<User>;
   removeUser: () => void;
-  setUser: (user: User) => void;
+  setUser: (user: Partial<User>) => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  user: {},
-  removeUser: () => set({ user: {} }),
-  setUser: (user) => set({ user }),
-}));
+export const useUserStore = create<UserState>()(
+  persist(
+    (set) => ({
+      user: {},
+      removeUser: () => set({ user: {} }),
+      setUser: (user) => set({ user }),
+    }),
+    { name: "user-info", storage: createJSONStorage(() => sessionStorage) }
+  )
+);

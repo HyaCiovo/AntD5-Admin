@@ -1,16 +1,25 @@
 import { Button, ConfigProvider, Flex, Layout } from "antd";
 import MyHeader from "./header";
-import React from "react";
+import React, { useEffect } from "react";
 import SiderMenu from "./sider-menu";
 import { useMouse, useThrottle } from "ahooks";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import MyBreadcrumbs from "./breadcrumbs";
 import { useLayoutStore, BtnProps } from "@/stores/layout";
+import { User, useUserStore } from "@/stores/user";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
   const { collapsed, setCollapsed, headerBtns } = useLayoutStore();
+  const { setUser, user } = useUserStore();
+
+  const loaderData = useLoaderData() as Partial<User>;
+
+  useEffect(() => {
+    setUser(loaderData)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const navigate = useNavigate();
   const renderBtns = (btns: BtnProps[]) => {
