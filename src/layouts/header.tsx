@@ -38,7 +38,12 @@ const Header = () => {
       <div className="flex items-center font-comic text-xl">
         <Link to="/" className="flex items-center -mt-1">
           <div className="relative">
-            <img src={"/logo.png"} alt="logo" className="h-9" />
+            <img src={"/favicon.png"} alt="logo" className="h-9" />
+            <img
+              src={VITE_LOGO}
+              alt="logo"
+              className="h-4 absolute -right-1 bottom-0"
+            />
             {/* <img
               src={ANTD_LOGO}
               alt="logo"
