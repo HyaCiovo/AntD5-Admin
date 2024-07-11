@@ -36,8 +36,8 @@ const Header = () => {
   return (
     <div className="bg-primary w-screen flex h-16 px-6 text-white justify-between select-none">
       <div className="flex items-center font-comic text-xl">
-        <Link to="/" className="flex items-center -mt-1">
-          <div className="relative">
+        <Link to="/" className="flex items-center">
+          <div className="relative -mt-1">
             <img src={"/favicon.png"} alt="logo" className="h-9" />
             <img
               src={VITE_LOGO}
