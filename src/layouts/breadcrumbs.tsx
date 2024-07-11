@@ -1,12 +1,12 @@
-import { MenusMap } from "@/router/menu";
 import { useLayoutStore } from "@/stores/layout";
-import { Breadcrumb } from "antd";
+import { LeftOutlined} from "@ant-design/icons";
+import { Breadcrumb, Button } from "antd";
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
   ItemType,
 } from "antd/es/breadcrumb/Breadcrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const itemRender = (
   route: ItemType,
@@ -15,22 +15,29 @@ const itemRender = (
   paths: string[]
 ) => {
   const isLast = route?.path === routes[routes.length - 1]?.path;
-
-  return isLast ? (
+  return (isLast || !route.path) ? (
     <span>{route.title}</span>
   ) : (
-    <Link to={`/${paths.join("/")}`}>{route.title}</Link>
+    <Link to={route.path}>
+      {route.title}
+    </Link>
   );
 };
 
 const MyBreadcrumbs = () => {
   const { breadcrumbs } = useLayoutStore();
+  const navigate = useNavigate();
 
-  const items = breadcrumbs.map((title) => {
-    return { title };
-  });
-
-  return <Breadcrumb itemRender={itemRender} items={items} />;
+  return <div className="flex items-center">
+    {breadcrumbs.length > 2 && <Button
+      className="mr-2 mt-[2px]"
+      type="text"
+      icon={<LeftOutlined />}
+      onClick={
+        () => navigate(breadcrumbs[breadcrumbs.length - 2].path)
+      } />}
+    <Breadcrumb itemRender={itemRender} items={breadcrumbs} />
+  </div>
 };
 
 export default MyBreadcrumbs;

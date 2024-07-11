@@ -1,20 +1,6 @@
 import { HomeOutlined, SettingOutlined, TeamOutlined } from "@ant-design/icons";
+import { title } from "process";
 import { ReactNode } from "react";
-
-/**
- * 根据路径查找菜单项的键。
- * 
- * @param path 要查找的菜单项的路径。
- * @returns 匹配菜单项的键，如果没有找到匹配项，则返回空字符串。
- */
-export const findKeyByPath = (path: string): string => {
-  for (const [key, value] of Object.entries(MenusMap)) {
-    if (value.path === path) {
-      return key;
-    }
-  }
-  return "";
-};
 
 const flattenFirstLevelChildren = (menus: any[]): any[] => {
   return menus.map(menu => {
@@ -46,10 +32,11 @@ const menuListToMap = (list: any[]) => {
    */
   function buildBreadcrumbs(item: any, parentBreadcrumbs: any[] = []) {
     /* 构建当前菜单项的面包屑数组。 */
-    const breadcrumbs = [...parentBreadcrumbs, item.label];
-    /* 创建当前菜单项的映射条目，包括label和breadCrumbs。 */
+    const breadcrumbs = [...parentBreadcrumbs, { title: item.label, path: item.path }];
+    /* 创建当前菜单项的映射条目，包括label、path和breadCrumbs。 */
     const entry: any = {
       label: item.label,
+      path: item.path,
       breadcrumbs,
     };
 

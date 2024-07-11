@@ -7,9 +7,14 @@ export interface BtnProps extends ButtonProps {
   url?: string;
 }
 
+interface BreadcrumbsType {
+  title: string;
+  path: string;
+}
+
 interface LayoutState {
-  breadcrumbs: Array<string>;
-  setBreadcrumbs: (breadcrumbs: Array<string>) => void;
+  breadcrumbs: Array<BreadcrumbsType>;
+  setBreadcrumbs: (breadcrumbs: Array<BreadcrumbsType>) => void;
   openKeys: Array<string>;
   setOpenKeys: (openKeys: Array<string>) => void;
   collapsed: boolean;
@@ -22,16 +27,18 @@ export const useLayoutStore = create<LayoutState>()(
   persist(
     (set) => ({
       breadcrumbs: [],
-      setBreadcrumbs: (breadcrumbs: Array<string>) => set({ breadcrumbs }),
+      setBreadcrumbs: (breadcrumbs: Array<BreadcrumbsType>) =>
+        set({ breadcrumbs }),
       openKeys: [],
       setOpenKeys: (openKeys: Array<string>) => set({ openKeys }),
       collapsed: false,
       setCollapsed: (collapsed: boolean) => set({ collapsed }),
       headerBtns: [],
       setHeaderBtns: (headerBtns) => set({ headerBtns }),
-    }), 
+    }),
     {
-    name: "layout-store",
-    storage: createJSONStorage(() => localStorage),
-  })
+      name: "layout-store",
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
 );
