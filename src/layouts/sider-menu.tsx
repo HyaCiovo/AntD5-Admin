@@ -21,7 +21,7 @@ const SiderMenu: React.FC = () => {
   const { pathname } = useLocation();
 
   React.useEffect(() => {
-    if (!pathname) return;
+    if (!MenusMap[pathname]) return;
     const keys = [`/${pathname.split("/")[1]}`];
     setSelectedKeys(keys);
     setBreadcrumbs(MenusMap[pathname].breadcrumbs);
@@ -52,21 +52,7 @@ const SiderMenu: React.FC = () => {
         selectedKeys={selectedKeys}
         mode="inline"
         items={menus}
-      >
-        {/* {menus.map((menu) => {
-          if (menu.children)
-            return <Menu.SubMenu
-              key={menu.key}
-              icon={menu.icon}
-              title={menu.label}
-            >{menu.children.map((child: any) =>
-              <Menu.Item key={child.key} title={child.label}>
-                {child.label}
-              </Menu.Item>)}
-            </Menu.SubMenu>
-        }
-        )} */}
-      </Menu>
+      />
     </div>
   );
 };

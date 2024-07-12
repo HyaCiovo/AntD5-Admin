@@ -1,4 +1,4 @@
-import { fetchUsers } from "@/apis/user";
+import { fetchUsers } from "@/apis/user-manage";
 import TableWithFilters from "@/components/custom/table";
 import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";

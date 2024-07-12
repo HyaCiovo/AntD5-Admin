@@ -2,13 +2,14 @@ import { signOut } from "@/apis/mock/user";
 import { useUserStore } from "@/stores/user";
 import { GithubOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useRequest } from "ahooks";
-import { Avatar, Divider, Dropdown, MenuProps, message, Modal, theme } from "antd"
-import React, { useEffect } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { App, Avatar, Divider, Dropdown, MenuProps, message, Modal, Spin, theme } from "antd"
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const { useToken } = theme;
 const User = () => {
   const [show, setShow] = React.useState(false);
+  const [spinning, setSpinning] = React.useState(false)
   const { token } = useToken();
   const contentStyle: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
@@ -39,27 +40,27 @@ const User = () => {
   ];
 
   const { user, removeUser } = useUserStore();
-
   const navigate = useNavigate()
+  const { message } = App.useApp();
 
-  const [messageApi, contextHolder] = message.useMessage();
   const { loading, run } = useRequest(signOut, {
     manual: true,
     onSuccess: () => {
       removeUser();
       setShow(false);
-      messageApi.success("Sign out successful, you will be redirected to the login page soon.");
+      setSpinning(true)
+      message.success("Sign out successful, you will be redirected to the login page soon.");
       setTimeout(() => {
         navigate("/login")
       }, 3000);
     },
     onError: (error) => {
-      messageApi.error(error.message);
+      message.error(error.message);
     },
   });
 
   return <>
-    {contextHolder}
+    <Spin spinning={spinning} fullscreen />
     <Modal
       title="Are you sure to sign out?"
       open={show}
