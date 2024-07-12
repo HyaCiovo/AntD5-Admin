@@ -1,7 +1,6 @@
 import { ConfigEnv, loadEnv, UserConfig } from "vite";
 import { resolve } from "path";
 import { VITE_DROP_CONSOLE, VITE_BASE_PATH } from "./config/constant";
-import { themeVariables } from "./config/theme";
 import { createVitePlugins } from "./config/plugins";
 import proxy from "./config/proxy";
 
@@ -25,7 +24,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         less: {
           javascriptEnabled: true,
-          modifyVars: themeVariables,
         },
       },
     },
