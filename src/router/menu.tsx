@@ -68,29 +68,38 @@ const menuListToMap = (list: any[]) => {
 
 /**
  * 创建一个菜单项对象。
- *
- * @param key 菜单项的唯一标识符。用于在代码中引用这个菜单项。
- * @param label 菜单项的显示文本。这是用户在界面上看到的文本。
- * @param children 菜单项的子项。可选参数，用于创建多级菜单结构。
- * @returns 返回一个包含菜单项信息的对象。
+ * 
+ * 该函数用于生成一个包含路径、标签和子项的菜单项对象。此对象通常用于表示导航菜单中的一个条目，
+ * 其中路径用于路由跳转，标签用于显示条目的名称，子项则是该条目下的子菜单项。
+ * 
+ * @param path 菜单项的路径，用于路由跳转。
+ * @param label 菜单项的显示标签，可以是文本或其他React元素。
+ * @param children 菜单项的子项，可选参数，用于表示该菜单项是否有子菜单。
+ * @returns 返回一个包含路径、标签、子项和唯一键的菜单项对象。
  */
-const setMenuItem = (key: string, label: ReactNode, children?: any[]) => {
+const setMenuItem = (path: string, label: ReactNode, children?: any[]) => {
   return {
-    key,
-    path: key,
+    key: path,
+    path,
     label,
     children,
   };
 };
 
+
 /**
- * 创建子菜单项的配置对象。
- *
- * @param key 菜单项的唯一标识符。用于在代码中引用或选择特定的菜单项。
- * @param label 菜单项的显示文本。这是用户界面中实际显示的文本。
- * @param icon 菜单项的图标。这个图标通常与菜单项的功能或类型相关联。
- * @param children 可选参数，表示当前菜单项下的子菜单项。这是一个数组，每个元素都是一个子菜单项的配置对象。
- * @returns 返回一个包含菜单项配置的对象。这个对象可以直接用于渲染菜单或作为菜单结构的一部分。
+ * 创建"一级"菜单项的配置对象。
+ * 
+ * 该函数用于生成一个包含"一级"菜单项各种属性的配置对象，方便后续使用。
+ * 主要用于在菜单系统中快速配置一个新的子菜单项，包括其键值、显示标签、图标以及可能的子菜单项。
+ * 
+ * @param key 菜单项的唯一标识符，用于在系统中唯一标识这个菜单项。
+ * * ⚠️ 注意：当该菜单项作为可跳转项时，key必须与路由配置中的path匹配，否则无法正确匹配路由。
+ * 
+ * @param label 菜单项的显示文本，用于用户界面中展示菜单项的名称。
+ * @param icon 菜单项的图标，用于用户界面中增强菜单项的视觉表现。
+ * @param children 菜单项的子菜单项数组，可选参数，用于配置当前菜单项下的子菜单。
+ * @returns 返回一个包含菜单项配置的对象，包括键值、路径、标签、图标和子菜单等信息。
  */
 const setSubMenuItem = (
   key: string,
@@ -108,7 +117,7 @@ const setSubMenuItem = (
 };
 
 export const MenusBeforeFilter = [
-  setSubMenuItem("/guide", "Guider", <HomeOutlined />),
+  setSubMenuItem("/guider", "Guider", <HomeOutlined />),
   setSubMenuItem("user", "UserManage", <TeamOutlined />, [
     setMenuItem("/role", "Role", [
       setMenuItem("/role/add", "Add"),

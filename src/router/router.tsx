@@ -56,7 +56,7 @@ export const routes = [
     children: [
       {
         index: true,
-        element: <Navigate to="/role" />,
+        element: <Navigate to="/guider" />,
       },
       {
         path: "*",
@@ -66,7 +66,7 @@ export const routes = [
       },
       {
         name: "引导介绍",
-        path: "/guide",
+        path: "/guider",
         element: (
           <LazyComponent Children={React.lazy(() => import("@/pages/guide"))} />
         ),
