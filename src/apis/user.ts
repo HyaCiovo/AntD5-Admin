@@ -8,3 +8,5 @@ export const fetchUsers = async (params?: any) => {
   const res = await fetch("https://randomuser.me/api" + queryString(params));
   return await res.json();
 };
+
+

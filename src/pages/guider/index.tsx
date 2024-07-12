@@ -31,7 +31,7 @@ const Introduction = () => {
       <p className="text-xl mt-4">
         The Main Libraries:{" "}
         {libraries.map((item, index) => (
-          <Link to={item.link} className="text-[#1677ff] hover:text-[#ff7875]">
+          <Link key={item.name} to={item.link} className="text-[#1677ff] hover:text-[#ff7875]">
             {item.name}
             {index < libraries.length - 1 && "、"}
           </Link>
