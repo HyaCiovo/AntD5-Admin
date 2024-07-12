@@ -68,7 +68,7 @@ export const routes = [
         name: "引导介绍",
         path: "/guider",
         element: (
-          <LazyComponent Children={React.lazy(() => import("@/pages/guide"))} />
+          <LazyComponent Children={React.lazy(() => import("@/pages/guider"))} />
         ),
       },
       {
