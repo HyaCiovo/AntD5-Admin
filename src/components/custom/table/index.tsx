@@ -1,9 +1,9 @@
 import { filterObjects } from "@/utils";
-import { useAntdTable } from "ahooks";
+import { useAntdTable, useSize } from "ahooks";
 import { Table, Button, Col, ConfigProvider, Form, Row } from "antd";
 import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "./filter";
 
 const TableWithFilters = (props: MyTableProps) => {
@@ -20,7 +20,23 @@ const TableWithFilters = (props: MyTableProps) => {
   } = props;
 
   const [form] = Form.useForm();
-  const [collapsed, setCollapsed] = useState(true);
+  const [showCollapsed, setShowCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(false);
+
+  const size = useSize(document.querySelector('#filters'))
+
+  // 根据size和showCollapsed的状态，决定是否需要设置为折叠状态
+  useEffect(() => {
+    // 如果size不存在或已显示为折叠状态，则不进行后续逻辑
+    if (!size || showCollapsed)
+      return
+    // 如果size的高度大于120，则将显示状态和实际折叠状态都设置为true
+    if (size?.height > 120) {
+      setShowCollapsed(true)
+      setCollapsed(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size])
 
   const getTableData = async (
     { current, pageSize }: { current: number, pageSize: number },
@@ -52,7 +68,10 @@ const TableWithFilters = (props: MyTableProps) => {
         form={form}
         className="flex justify-between items-start"
       >
-        <Row gutter={16} className={`w-[76%] ${collapsed && 'h-20 overflow-hidden'}`} >
+        <Row
+          gutter={16}
+          id="filters"
+          className={`w-[76%] ${collapsed && 'h-20 overflow-hidden'}`} >
           {filters.map((item) => (
             <Col span={item.type === "RangePicker" ? 10 : 6} key={item.name}>
               {item.type === 'Input' && <Filter.InputFilter {...item} />}
@@ -72,7 +91,7 @@ const TableWithFilters = (props: MyTableProps) => {
           {exportFn && <Button className="ml-2" onClick={exportFn}>
             EXPORT
           </Button>}
-          {filters.length > 4 && <Button type="link" className="p-0 ml-2" onClick={() => setCollapsed(!collapsed)}>
+          {showCollapsed && <Button type="link" className="p-0 ml-2" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? 'Expand' : 'Collapse'}
             <DownOutlined className={`${collapsed ? 'rotate-0' : 'rotate-180'}`} />
           </Button>}

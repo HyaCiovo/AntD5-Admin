@@ -1,6 +1,6 @@
 import { Button, ConfigProvider, Flex, Layout } from "antd";
 import MyHeader from "./header";
-import React, { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import SiderMenu from "./sider-menu";
 import { useMouse, useThrottle } from "ahooks";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
@@ -11,13 +11,15 @@ import {
   useNormalLayoutStore,
 } from "@/stores/layout";
 import { User, useUserStore } from "@/stores/user";
+import { CaretLeftOutlined } from "@ant-design/icons";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
   const { collapsed, setCollapsed } = useLayoutStore();
   const { headerBtns } = useNormalLayoutStore();
-  const { setUser, user } = useUserStore();
+  const [show, setShow] = useState(false)
+  const { setUser } = useUserStore();
 
   const loaderData = useLoaderData() as Partial<User>;
 
@@ -45,23 +47,23 @@ const LayoutComponent = () => {
     });
   };
 
-  const controllerRef = React.useRef(null);
+  const controllerRef = useRef(null);
   const { elementX, elementY, elementW, elementH } = useMouse(
     controllerRef.current
   );
-
-  const show = React.useMemo(() => {
+  useEffect(() => {
     if (
       elementX >= 0 &&
       elementY >= 0 &&
       elementX <= elementW &&
       elementY <= elementH
     )
-      return true;
-    return false;
-  }, [elementX, elementY, elementW, elementH]);
+      return setShow(true)
+    setShow(false)
+  },
+    [elementX, elementY, elementW, elementH])
 
-  const throttledShow = useThrottle(show, { wait: 500 });
+  const throttleShow = useThrottle(show, { wait: 100 });
 
   return (
     <ConfigProvider
@@ -85,23 +87,14 @@ const LayoutComponent = () => {
           >
             <SiderMenu />
             <div
-              className="absolute top-0 bottom-0 w-4 right-0"
+              className={`fixed top-16 z-[99999] bottom-0 w-4 left-48 ${collapsed && "-translate-x-32"}`}
               ref={controllerRef}
             >
-              <div
-                className={`mt-48 ${
-                  !throttledShow && "hidden"
-                } cursor-pointer px-1 py-4 hover:bg-[#E7E9E8] bg-white
-          border border-solid border-[#E7E9E8] rounded-lg shadow-md`}
-                onClick={() => setCollapsed(!collapsed)}
-              >
-                <div
-                  className={`border-[6px] border-solid border-transparent border-l-[#262626] 
-               ${
-                 collapsed ? "rotate-0 ml-[1px]" : "rotate-180 -ml-[7px]"
-               } inline-block self-center`}
-                />
-              </div>
+              {show && <Button
+                className={` mt-40 rounded-md w-3 h-12`}
+                icon={<CaretLeftOutlined className={`${collapsed ? "rotate-180" : "rotate-0"}`} />}
+                onClick={() => { setShow(false); setCollapsed(!collapsed) }}
+              />}
             </div>
           </Sider>
           <Layout>

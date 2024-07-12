@@ -18,6 +18,5 @@ const getUserInfo = (): Promise<User> => {
 
 export const tokenLoader = async () => {
   const userInfo = await getUserInfo();
-  console.log(userInfo)
   return userInfo;
 };

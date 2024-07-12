@@ -38,15 +38,15 @@ const filters = [
       { value: "other", label: "Other" },
     ],
   },
-  { name: "name", label: "Name", type: "Input" },
-  { name: "email", label: "Email", type: "Input" },
-  { name: "phone", label: "Phone", type: "Input" },
   {
     name: "birthdate",
     label: "Birth",
     type: "RangePicker",
     format: "YYYY-MM-DD",
   },
+  { name: "name", label: "Name", type: "Input" },
+  // { name: "email", label: "Email", type: "Input" },
+  // { name: "phone", label: "Phone", type: "Input" },
 ];
 
 const Component = () => {
