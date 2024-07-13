@@ -19,16 +19,7 @@ const LazyComponent = ({ Children, layout = false }: LazyComponentProps) => {
   return (
     <React.Suspense
       fallback={
-        !layout ? (
-          <TablePageSkeleton />
-        ) : (
-          <Spin size="large" fullscreen>
-            <div
-              style={{ backgroundImage: `url('${"/favicon.png"}')` }}
-              className="h-32 w-32 bg-cover"
-            />
-          </Spin>
-        )
+        !layout ? <TablePageSkeleton /> : <Spin size="large" fullscreen />
       }
     >
       <Children />
@@ -42,19 +33,10 @@ export const routes = [
     name: "登录",
     path: "/login",
     element: (
-      <Spin
-        size="large"
-        tip={
-          <div
-            style={{ backgroundImage: `url('${"/favicon.png"}')` }}
-            className="h-32 w-32 bg-cover"
-          />
-        }
-      ></Spin>
-      // <LazyComponent
-      //   layout
-      //   Children={React.lazy(() => import("@/pages/login"))}
-      // />
+      <LazyComponent
+        layout
+        Children={React.lazy(() => import("@/pages/login"))}
+      />
     ),
   },
   {
