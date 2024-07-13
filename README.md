@@ -47,7 +47,9 @@ The project relies on several key packages to function as intended. Below is a l
 | @ant-design/icons | 5.3.7   | provides a rich set of icons for use with Ant Design components. |
 | ahooks            | 3.8.0   | a collection of custom hooks for React to simplify state management and side effects. |
 | antd              | 5.19.0  | a popular UI library based on Ant Design specifications.     |
+| axios             | 1.7.2   | a promise-based HTTP client for the browser and Node.js.     |
 | dayjs             | 1.11.11 | a lightweight date-time library for JavaScript.              |
+| immer             | 10.1.1  | a library for creating and managing immutable state in React applications. |
 | react             | 18.3.1  | the core library for building user interfaces.               |
 | react-dom         | 18.3.1  | the DOM-specific part of React used to render React elements into the DOM. |
 | react-router-dom  | 6.24.1  | routing for React applications.                              |
