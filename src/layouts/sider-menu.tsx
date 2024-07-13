@@ -6,8 +6,8 @@ import { useLayoutStore } from "@/stores/layout";
 
 const SiderMenu: React.FC = () => {
   const { setBreadcrumbs, setOpenKeys, openKeys, collapsed } = useLayoutStore();
-  const [selectedKeys, setSelectedKeys] = React.useState(["role"]);
-  const [menuOpenKeys, setMenuOpenKeys] = React.useState(openKeys);
+  const [selectedKeys, setSelectedKeys] = React.useState<string[]>();
+  const [menuOpenKeys, setMenuOpenKeys] = React.useState<string[]>();
 
   const navigate = useNavigate();
   const onSelect = (menu: any) => {
@@ -30,6 +30,7 @@ const SiderMenu: React.FC = () => {
 
   React.useEffect(() => {
     !collapsed && setMenuOpenKeys(openKeys);
+    collapsed && setMenuOpenKeys([]);
   }, [openKeys, collapsed]);
 
   return (
