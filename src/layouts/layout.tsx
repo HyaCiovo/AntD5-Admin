@@ -2,7 +2,7 @@ import { Button, ConfigProvider, Flex, Layout } from "antd";
 import MyHeader from "./header";
 import { useEffect, useRef, useState } from "react";
 import SiderMenu from "./sider-menu";
-import { useMouse, useThrottle } from "ahooks";
+import { useMouse } from "ahooks";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import MyBreadcrumbs from "./breadcrumbs";
 import {
@@ -12,13 +12,14 @@ import {
 } from "@/stores/layout";
 import { User, useUserStore } from "@/stores/user";
 import { CaretLeftOutlined } from "@ant-design/icons";
+import styles from "./layout.module.less";
 
 const { Header, Content, Sider } = Layout;
 
 const LayoutComponent = () => {
   const { collapsed, setCollapsed } = useLayoutStore();
   const { headerBtns } = useNormalLayoutStore();
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const { setUser } = useUserStore();
 
   const loaderData = useLoaderData() as Partial<User>;
@@ -58,43 +59,53 @@ const LayoutComponent = () => {
       elementX <= elementW &&
       elementY <= elementH
     )
-      return setShow(true)
-    setShow(false)
-  },
-    [elementX, elementY, elementW, elementH])
-
-  const throttleShow = useThrottle(show, { wait: 100 });
+      return setShow(true);
+    setShow(false);
+  }, [elementX, elementY, elementW, elementH]);
 
   return (
     <ConfigProvider
       theme={{
         components: {
           Layout: { headerPadding: 0 },
-          Menu: { collapsedWidth: 72 },
+          Menu: {
+            collapsedWidth: 72,
+          },
         },
       }}
     >
-      <Layout>
+      <Layout className={styles.layout}>
         <Header className="flex items-center">
           <MyHeader />
         </Header>
         <Layout>
           <Sider
-            width="200"
+            width="220"
             breakpoint="lg"
             collapsedWidth="72"
             collapsed={collapsed}
           >
             <SiderMenu />
             <div
-              className={`fixed top-16 z-[99999] bottom-0 w-4 left-48 ${collapsed && "-translate-x-32"}`}
+              className={`fixed top-16 z-[99999] bottom-0 w-4 left-[212px] ${
+                collapsed ? "-translate-x-[148px]" : "translate-x-0"
+              }`}
               ref={controllerRef}
             >
-              {show && <Button
-                className={` mt-40 rounded-md w-3 h-12`}
-                icon={<CaretLeftOutlined className={`${collapsed ? "rotate-180" : "rotate-0"}`} />}
-                onClick={() => { setShow(false); setCollapsed(!collapsed) }}
-              />}
+              {show && (
+                <Button
+                  className="mt-40 rounded-md w-3 h-12"
+                  icon={
+                    <CaretLeftOutlined
+                      className={`${collapsed ? "rotate-180" : "rotate-0"}`}
+                    />
+                  }
+                  onClick={() => {
+                    setShow(false);
+                    setCollapsed(!collapsed);
+                  }}
+                />
+              )}
             </div>
           </Sider>
           <Layout>

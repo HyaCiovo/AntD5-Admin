@@ -1,4 +1,5 @@
 const AntdTheme = {
+  hashed: false,
   token: {
     // colorPrimary: "#0754b2",
     colorTextBase: "#333",

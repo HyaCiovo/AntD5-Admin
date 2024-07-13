@@ -6,9 +6,12 @@ import AntdTheme from "config/theme/antd-theme";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import "@/styles/global.less";
+import useMountFetchData from "@/hooks/useMountFetchData";
 
 const MyPage = () => {
   dayjs.locale("zh-cn");
+
+  useMountFetchData();
 
   return (
     <ConfigProvider theme={AntdTheme}>

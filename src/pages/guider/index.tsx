@@ -12,7 +12,7 @@ const libraries = [
 ];
 const Introduction = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-main">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-192px)]">
       <div className="relative">
         <img src={"/favicon.png"} alt="logo" className="h-40" />
         <img
@@ -31,7 +31,11 @@ const Introduction = () => {
       <p className="text-xl mt-4">
         The Main Libraries:{" "}
         {libraries.map((item, index) => (
-          <Link key={item.name} to={item.link} className="text-[#1677ff] hover:text-[#ff7875]">
+          <Link
+            key={item.name}
+            to={item.link}
+            className="text-[#1677ff] hover:text-[#ff7875]"
+          >
             {item.name}
             {index < libraries.length - 1 && "、"}
           </Link>

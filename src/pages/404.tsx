@@ -2,11 +2,12 @@ import { useLocation } from "react-router-dom";
 
 const NotFound = () => {
   const location = useLocation();
+
   return (
     <div>
-      <h1>404 NotFound</h1>
-      <p>Can not find the page</p>
-      <p>{location.pathname}</p>
+      <h1 className="text-2xl">404 Not Found</h1>
+      <p className="text-xl">Can not find the page</p>
+      <p className="text-xl">"{location.pathname}"</p>
     </div>
   );
 };

@@ -68,7 +68,9 @@ export const routes = [
         name: "引导介绍",
         path: "/guider",
         element: (
-          <LazyComponent Children={React.lazy(() => import("@/pages/guider"))} />
+          <LazyComponent
+            Children={React.lazy(() => import("@/pages/guider"))}
+          />
         ),
       },
       {
@@ -100,7 +102,7 @@ export const routes = [
       },
       {
         name: "路由配置",
-        path: "/route_config",
+        path: "/route-config",
         auth: "auth.route",
         element: (
           <LazyComponent
@@ -110,11 +112,31 @@ export const routes = [
       },
       {
         name: "图片配置",
-        path: "/picture_config",
+        path: "/picture-config",
         auth: "auth.picture",
         element: (
           <LazyComponent
             Children={React.lazy(() => import("@/pages/config-pictures"))}
+          />
+        ),
+      },
+      {
+        name: "图片配置",
+        path: "/audit-permissions",
+        auth: "audit.permissions",
+        element: (
+          <LazyComponent
+            Children={React.lazy(() => import("@/pages/audit-permissions"))}
+          />
+        ),
+      },
+      {
+        name: "图片配置",
+        path: "/audit-goods",
+        auth: "audit.goods",
+        element: (
+          <LazyComponent
+            Children={React.lazy(() => import("@/pages/audit-goods"))}
           />
         ),
       },
