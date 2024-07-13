@@ -20,35 +20,35 @@ const TableWithFilters = (props: MyTableProps) => {
   } = props;
 
   const [form] = Form.useForm();
-  const [showCollapsed, setShowCollapsed] = useState(false)
+  const [showCollapsed, setShowCollapsed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
-  const size = useSize(document.querySelector('#filters'))
+  const size = useSize(document.querySelector("#filters"));
 
   // 根据size和showCollapsed的状态，决定是否需要设置为折叠状态
   useEffect(() => {
     // 如果size不存在或已显示为折叠状态，则不进行后续逻辑
-    if (!size || showCollapsed)
-      return
+    if (!size || showCollapsed) return;
     // 如果size的高度大于120，则将显示状态和实际折叠状态都设置为true
     if (size?.height > 120) {
-      setShowCollapsed(true)
-      setCollapsed(true)
+      setShowCollapsed(true);
+      setCollapsed(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size])
+  }, [size]);
 
   const getTableData = async (
-    { current, pageSize }: { current: number, pageSize: number },
-    formData?: object): Promise<Result> => {
-    const params = filterObjects({ current, pageSize, ...formData })
+    { current, pageSize }: { current: number; pageSize: number },
+    formData?: object
+  ): Promise<Result> => {
+    const params = filterObjects({ current, pageSize, ...formData });
     // console.log("🚀 ~ getTableData ~ params:", params)
-    return await fetchData(params)
-  }
+    return await fetchData(params);
+  };
 
   const { tableProps, search } = useAntdTable(getTableData, {
     form,
-    defaultPageSize
+    defaultPageSize,
   });
 
   const { submit, reset } = search;
@@ -58,12 +58,15 @@ const TableWithFilters = (props: MyTableProps) => {
   };
 
   return (
-    <ConfigProvider theme={{
-      components: {
-        Form: { verticalLabelPadding: '0 0 4px' }
-      }
-    }}>
-      <Form {...layout}
+    <ConfigProvider
+      theme={{
+        components: {
+          Form: { verticalLabelPadding: "0 0 4px" },
+        },
+      }}
+    >
+      <Form
+        {...layout}
         layout="vertical"
         form={form}
         className="flex justify-between items-start"
@@ -71,30 +74,50 @@ const TableWithFilters = (props: MyTableProps) => {
         <Row
           gutter={16}
           id="filters"
-          className={`w-[76%] ${collapsed && 'h-20 overflow-hidden'}`} >
+          className={`w-[76%] ${collapsed && "h-20 overflow-hidden"}`}
+        >
           {filters.map((item) => (
             <Col span={item.type === "RangePicker" ? 10 : 6} key={item.name}>
-              {item.type === 'Input' && <Filter.InputFilter {...item} />}
-              {item.type === 'Select' && <Filter.SelectFilter {...item} />}
-              {item.type === 'DatePicker' && <Filter.DateFilter {...item} />}
-              {item.type === 'RangePicker' && <Filter.RangeFilter {...item} />}
+              {item.type === "Input" && <Filter.InputFilter {...item} />}
+              {item.type === "Select" && <Filter.SelectFilter {...item} />}
+              {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
+              {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
             </Col>
           ))}
         </Row>
-        <Row justify="end" align="middle" gutter={16} className="mt-[26px] text-nowrap">
-          {showSearchButton && <Button type="primary" onClick={submit}>
-            SEARCH
-          </Button>}
-          {showResetButton && <Button onClick={reset} className="ml-2">
-            RESET
-          </Button>}
-          {exportFn && <Button className="ml-2" onClick={exportFn}>
-            EXPORT
-          </Button>}
-          {showCollapsed && <Button type="link" className="p-0 ml-2" onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? 'Expand' : 'Collapse'}
-            <DownOutlined className={`${collapsed ? 'rotate-0' : 'rotate-180'}`} />
-          </Button>}
+        <Row
+          justify="end"
+          align="middle"
+          gutter={16}
+          className="mt-[26px] text-nowrap"
+        >
+          {showSearchButton && (
+            <Button type="primary" onClick={submit}>
+              SEARCH
+            </Button>
+          )}
+          {showResetButton && (
+            <Button onClick={reset} className="ml-2">
+              RESET
+            </Button>
+          )}
+          {exportFn && (
+            <Button className="ml-2" onClick={exportFn}>
+              EXPORT
+            </Button>
+          )}
+          {showCollapsed && (
+            <Button
+              type="link"
+              className="p-0 ml-2"
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              {collapsed ? "Expand" : "Collapse"}
+              <DownOutlined
+                className={`${collapsed ? "rotate-0" : "rotate-180"}`}
+              />
+            </Button>
+          )}
         </Row>
       </Form>
       <Table
@@ -102,14 +125,14 @@ const TableWithFilters = (props: MyTableProps) => {
         {...tableProps}
         className="border-t-border border-t border-t-solid"
         pagination={{
-          pageSize: defaultPageSize,
+          ...tableProps.pagination,
           showSizeChanger,
           showQuickJumper,
           showTotal,
         }}
       />
-    </ConfigProvider >
+    </ConfigProvider>
   );
-}
+};
 
 export default TableWithFilters;
