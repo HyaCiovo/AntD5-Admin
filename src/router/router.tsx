@@ -6,7 +6,6 @@ import { Spin } from "antd";
 interface LazyComponentProps {
   Children: React.LazyExoticComponent<() => JSX.Element>;
   layout?: boolean;
-  table?: boolean;
 }
 
 const TablePageSkeleton = () => {
@@ -16,15 +15,20 @@ const TablePageSkeleton = () => {
     </div>
   );
 };
-const LazyComponent = ({
-  Children,
-  layout = false,
-  table = true,
-}: LazyComponentProps) => {
+const LazyComponent = ({ Children, layout = false }: LazyComponentProps) => {
   return (
     <React.Suspense
       fallback={
-        !layout && table ? <TablePageSkeleton /> : <Spin size="large" />
+        !layout ? (
+          <TablePageSkeleton />
+        ) : (
+          <Spin size="large" fullscreen>
+            <div
+              style={{ backgroundImage: `url('${"/favicon.png"}')` }}
+              className="h-32 w-32 bg-cover"
+            />
+          </Spin>
+        )
       }
     >
       <Children />
@@ -38,10 +42,19 @@ export const routes = [
     name: "登录",
     path: "/login",
     element: (
-      <LazyComponent
-        layout
-        Children={React.lazy(() => import("@/pages/login"))}
-      />
+      <Spin
+        size="large"
+        tip={
+          <div
+            style={{ backgroundImage: `url('${"/favicon.png"}')` }}
+            className="h-32 w-32 bg-cover"
+          />
+        }
+      ></Spin>
+      // <LazyComponent
+      //   layout
+      //   Children={React.lazy(() => import("@/pages/login"))}
+      // />
     ),
   },
   {

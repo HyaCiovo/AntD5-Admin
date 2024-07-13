@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { create } from "zustand";
+import { produce } from "immer";
 import DataMaps from "@/stores/initialGlobalData";
 
 export type InitialGlobalState = Record<
@@ -12,18 +13,21 @@ interface State {
   setProperty: (property: string, value: unknown) => void;
 }
 
-export const useMountDataStore = create<State>((set) => ({
+export const useMountDataStore = create<State>()((set) => ({
   data: Object.fromEntries(
     Object.entries(DataMaps).map(([key, value]) => [key, value.initial])
   ),
   setProperty: (property: string, value: unknown) =>
-    set((state: State) => ({
-      data: { ...state.data, [property]: value },
-    })),
+    set(
+      produce((state) => {
+        // 使用Immer的produce函数来修改状态
+        state.data[property] = value;
+      })
+    ),
 }));
 
 const useMountFetchData = () => {
-  const { setProperty, data } = useMountDataStore();
+  const { setProperty } = useMountDataStore();
   const fetchAll = () => {
     Object.entries(DataMaps).forEach(async ([key, value]) => {
       value.func &&
