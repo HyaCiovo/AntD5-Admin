@@ -1,4 +1,3 @@
-import { VITE_LOGO } from "config/constant";
 import { Link } from "react-router-dom";
 
 const libraries = [
@@ -15,11 +14,6 @@ const Introduction = () => {
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-192px)]">
       <div className="relative">
         <img src={"/favicon.png"} alt="logo" className="h-40" />
-        <img
-          src={VITE_LOGO}
-          alt="logo"
-          className="h-12 absolute -right-3 bottom-0"
-        />
       </div>
       <h1 className="text-4xl font-bold mt-8">
         Welcome to Antd Admin Template

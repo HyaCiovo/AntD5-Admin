@@ -6,13 +6,13 @@ const getUserInfo = (): Promise<User> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        username: "HyaCinOvo",
+        username: "CSS-in-JS Hater",
         avatar: "/avatar/hyacinth_avatar.jpg",
         role: "Administrator",
         email: "hyacinth@gmail.com",
         phone: "15312347956",
       });
-    }, 1500);
+    }, 500);
   });
 };
 

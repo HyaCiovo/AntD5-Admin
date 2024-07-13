@@ -1,5 +1,5 @@
 import { Col, Row, } from "antd";
-import { VITE_APP_TITLE, VITE_LOGO } from "config/constant";
+import { VITE_APP_TITLE } from "config/constant";
 import { Link } from "react-router-dom";
 import User from "./userInfo";
 const Header = () => {
@@ -14,11 +14,6 @@ const Header = () => {
         <Link to="/guider" className="flex items-center">
           <div className="relative -mt-1">
             <img src={"/favicon.png"} alt="logo" className="h-8" />
-            <img
-              src={VITE_LOGO}
-              alt="logo"
-              className="h-3 absolute -right-1 bottom-0"
-            />
           </div>
           <h1 className="font-semibold ml-3 line-clamp-1">Ant Design 5</h1>
         </Link>
