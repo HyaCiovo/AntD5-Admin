@@ -1,7 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "@/router/router";
 import { ConfigProvider, App } from "antd";
-import { Analytics } from "@vercel/analytics/react";
 import AntdTheme from "config/theme/antd-theme";
 // import zhCN from 'antd/locale/zh_CN';
 import dayjs from "dayjs";
@@ -16,7 +15,6 @@ const MyPage = () => {
 
   return (
     <ConfigProvider theme={AntdTheme}>
-      <Analytics />
       <App>
         <RouterProvider router={router} />
       </App>
