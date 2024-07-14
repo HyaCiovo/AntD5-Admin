@@ -8,12 +8,15 @@ import type {
 import type { RangePickerProps } from "antd/lib/date-picker";
 
 export type FILTER_ITEM_PROPS =
+  | HiddenFilterProps
   | InputProps
   | SelectProps
   | DatePickerProps
   | RangePickerProps
   | TreeSelectProps;
+
 export type FILTER_ITEM_TYPE =
+  | "Hidden"
   | "Input"
   | "Select"
   | "DatePicker"
@@ -25,13 +28,15 @@ export type BaseFilterProps<T extends FILTER_ITEM_PROPS> = FormItemProps &
     type: FILTER_ITEM_TYPE;
   };
 
-export interface InputFilterProps extends BaseFilterProps<InputProps> {}
+export interface InputFilterProps extends BaseFilterProps<InputProps> { }
 
-export interface SelectFilterProps extends BaseFilterProps<SelectProps> {}
+export interface HiddenFilterProps extends Omit<BaseFilterProps<InputProps>, "placeholder"> { }
 
-export interface TreeFilterProps extends BaseFilterProps<TreeSelectProps> {}
+export interface SelectFilterProps extends BaseFilterProps<SelectProps> { }
 
-export interface DateFilterProps extends BaseFilterProps<DatePickerProps> {}
+export interface TreeFilterProps extends BaseFilterProps<TreeSelectProps> { }
+
+export interface DateFilterProps extends BaseFilterProps<DatePickerProps> { }
 
 export interface DateRangeFilterProps
-  extends BaseFilterProps<RangePickerProps> {}
+  extends BaseFilterProps<RangePickerProps> { }

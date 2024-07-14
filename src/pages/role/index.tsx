@@ -25,27 +25,45 @@ const columns = [
 ];
 
 const filters = [
-  { name: "id", label: "ID", type: "Input" },
+  { name: "Hidden", type: "Hidden", initialValue: "121212" },
+  { name: "Input", label: "Input", type: "Input" },
   {
-    name: "gender",
-    label: "Gender",
+    name: "Select",
+    label: "Select",
     type: "Select",
-    initialValue: "",
+    initialValue: "all",
     options: [
-      { value: "", label: "All" },
+      { value: "all", label: "All" },
       { value: "male", label: "Male" },
       { value: "female", label: "Female" },
       { value: "other", label: "Other" },
     ],
   },
   {
-    name: "birthdate",
-    label: "Birth",
+    name: "TreeSelect",
+    label: "TreeSelect",
+    type: "TreeSelect",
+    treeData: [
+      {
+        title: "Light",
+        value: "light",
+        children: [{ title: "Bamboo", value: "bamboo" }],
+      },
+    ],
+  },
+  {
+    name: "DatePicker",
+    label: "DatePicker",
+    type: "DatePicker",
+    format: "YYYY-MM-DD",
+  },
+  {
+    name: "RangePicker",
+    label: "RangePicker",
     type: "RangePicker",
     format: "YYYY-MM-DD",
   },
-  { name: "name", label: "Name", type: "Input" },
-  // { name: "email", label: "Email", type: "Input" },
+
   // { name: "phone", label: "Phone", type: "Input" },
 ];
 
@@ -86,6 +104,7 @@ const Component = () => {
       filters={filters}
       rowKey={(record: any) => record.email}
       fetchData={fetchData}
+      // exportFn={async() => {}}
     />
   );
 };

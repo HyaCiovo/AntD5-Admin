@@ -57,6 +57,11 @@ const TableWithFilters = (props: MyTableProps) => {
     wrapperCol: { span: 24 },
   };
 
+  const Span: Record<string, number> = {
+    RangePicker: 10,
+    Hidden: 0,
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -74,12 +79,18 @@ const TableWithFilters = (props: MyTableProps) => {
         <Row
           gutter={16}
           id="filters"
-          className={`w-[76%] ${collapsed && "h-20 overflow-hidden"}`}
+          className={`w-[74%] ${collapsed && "h-20 overflow-hidden"}`}
         >
           {filters.map((item) => (
-            <Col span={item.type === "RangePicker" ? 10 : 6} key={item.name}>
+            <Col
+              span={Span[item.type] || 6}
+              key={item.name}
+              hidden={item.type === "Hidden"}
+            >
+              {item.type === "Hidden" && <Filter.HiddenFilter {...item} />}
               {item.type === "Input" && <Filter.InputFilter {...item} />}
               {item.type === "Select" && <Filter.SelectFilter {...item} />}
+              {item.type === "TreeSelect" && <Filter.TreeFilter {...item} />}
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
             </Col>
@@ -88,35 +99,39 @@ const TableWithFilters = (props: MyTableProps) => {
         <Row
           justify="end"
           align="middle"
-          gutter={16}
-          className="mt-[26px] text-nowrap"
+          gutter={[8, 8]}
+          className="mt-[26px] pl-2 text-nowrap"
         >
           {showSearchButton && (
-            <Button type="primary" onClick={submit}>
-              SEARCH
-            </Button>
+            <Col>
+              <Button type="primary" onClick={submit}>
+                SEARCH
+              </Button>
+            </Col>
           )}
           {showResetButton && (
-            <Button onClick={reset} className="ml-2">
-              RESET
-            </Button>
+            <Col>
+              <Button onClick={reset}>RESET</Button>
+            </Col>
           )}
           {exportFn && (
-            <Button className="ml-2" onClick={exportFn}>
-              EXPORT
-            </Button>
+            <Col>
+              <Button onClick={exportFn}>EXPORT</Button>
+            </Col>
           )}
           {showCollapsed && (
-            <Button
-              type="link"
-              className="p-0 ml-2"
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              {collapsed ? "Expand" : "Collapse"}
-              <DownOutlined
-                className={`${collapsed ? "rotate-0" : "rotate-180"}`}
-              />
-            </Button>
+            <Col>
+              <Button
+                type="link"
+                className="px-0"
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                {collapsed ? "Expand" : "Collapse"}
+                <DownOutlined
+                  className={`${collapsed ? "rotate-0" : "rotate-180"}`}
+                />
+              </Button>
+            </Col>
           )}
         </Row>
       </Form>
