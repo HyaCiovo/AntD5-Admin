@@ -7,7 +7,9 @@ import {
   SelectFilterProps,
   TreeFilterProps,
   HiddenFilterProps,
+  CustomFilterProps,
 } from "./type";
+import React from "react";
 
 const HiddenFilter = (props: HiddenFilterProps) => {
   return (
@@ -181,6 +183,15 @@ const RangeFilter = (props: DateRangeFilterProps) => {
   );
 };
 
+const CustomFilter = (props: CustomFilterProps) => {
+  const { element, ...otherProps } = props;
+  return (
+    <Form.Item {...otherProps}>
+      <span id={otherProps.name}>{React.createElement(element)}</span>
+    </Form.Item>
+  );
+};
+
 export default {
   HiddenFilter,
   InputFilter,
@@ -188,4 +199,5 @@ export default {
   DateFilter,
   RangeFilter,
   TreeFilter,
+  CustomFilter,
 };

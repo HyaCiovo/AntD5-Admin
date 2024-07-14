@@ -26,6 +26,7 @@ export type FILTER_ITEM_TYPE =
 export type BaseFilterProps<T extends FILTER_ITEM_PROPS> = FormItemProps &
   Omit<T, keyof FormItemProps> & {
     type: FILTER_ITEM_TYPE;
+    span?: number;
   };
 
 export interface InputFilterProps extends BaseFilterProps<InputProps> { }
@@ -37,6 +38,10 @@ export interface SelectFilterProps extends BaseFilterProps<SelectProps> { }
 export interface TreeFilterProps extends BaseFilterProps<TreeSelectProps> { }
 
 export interface DateFilterProps extends BaseFilterProps<DatePickerProps> { }
+
+export interface CustomFilterProps extends FormItemProps {
+  element: (props: Partial<{ onChange?: (value: any) => void, value?: any }>) => JSX.Element
+}
 
 export interface DateRangeFilterProps
   extends BaseFilterProps<RangePickerProps> { }

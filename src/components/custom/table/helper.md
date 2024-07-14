@@ -45,11 +45,11 @@ const TablePage = () => {
 
 ## 待扩展
 
-- HiddenFilter
+- [x] HiddenFilter
 
   > 不会在页面上显示的过滤条件。
 
-- CustomFilter
+- [x] CustomFilter
 
   > 自定义过滤控件。参考 Ant Design 的自定义表单控件实现
   >
@@ -57,7 +57,7 @@ const TablePage = () => {
   > - 提供 `onChange` 事件或 [`trigger`](https://ant.design/components/form-cn#formitem) 的值同名的事件。
   > - 转发 ref 或者传递 id 属性到 dom 以支持 `scrollToField` 方法。
 
-- TabsFilter
+- [ ] TabsFilter
 
   > Tabs 组实现过滤条件的选择，参考现有产品：
   >

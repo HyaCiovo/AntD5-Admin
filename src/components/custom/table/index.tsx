@@ -83,7 +83,7 @@ const TableWithFilters = (props: MyTableProps) => {
         >
           {filters.map((item) => (
             <Col
-              span={Span[item.type] || 6}
+              span={item.span || Span[item.type] || 6}
               key={item.name}
               hidden={item.type === "Hidden"}
             >
@@ -93,6 +93,7 @@ const TableWithFilters = (props: MyTableProps) => {
               {item.type === "TreeSelect" && <Filter.TreeFilter {...item} />}
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
+              {item.type === "Custom" && <Filter.CustomFilter {...item} />}
             </Col>
           ))}
         </Row>

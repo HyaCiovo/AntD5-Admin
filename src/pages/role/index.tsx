@@ -4,6 +4,7 @@ import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";
 import { BtnProps } from "@/stores/layout";
 import { ExportOutlined, UserAddOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 
 const columns = [
   {
@@ -63,8 +64,15 @@ const filters = [
     type: "RangePicker",
     format: "YYYY-MM-DD",
   },
-
-  // { name: "phone", label: "Phone", type: "Input" },
+  {
+    name: "Custom",
+    label: "Custom",
+    type: "Custom",
+    span: 10,
+    element: (props: any) => (
+      <Input onChange={props.onChange} value={props.value} />
+    ),
+  },
 ];
 
 const Component = () => {
