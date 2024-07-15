@@ -47,7 +47,7 @@ export interface DateFilterProps extends BaseFilterProps<DatePickerProps> {}
 export interface CustomFilterProps extends FormItemProps {
   type: FILTER_ITEM_TYPE;
   span?: number;
-  element: (
+  element?: (
     props: Partial<{
       onChange?: (value: any) => void;
       value?: any;

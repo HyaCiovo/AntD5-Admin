@@ -1,10 +1,10 @@
 import { filterObjects } from "@/utils";
 import { useAntdTable, useSize } from "ahooks";
-import { Table, Button, Col, ConfigProvider, Form, Row, Radio } from "antd";
+import { Table, Button, Col, ConfigProvider, Form, Row } from "antd";
 import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import Filter from "./filter";
+import Filter, { Span } from "./filter";
 
 const TableWithFilters = (props: MyTableProps) => {
   const {
@@ -57,23 +57,6 @@ const TableWithFilters = (props: MyTableProps) => {
     wrapperCol: { span: 24 },
   };
 
-  const Span: Record<string, number> = {
-    RangePicker: 10,
-    Hidden: 0,
-    TabsFilter: 24,
-  };
-
-  const Custom = (props: any) => {
-    return <span id={props.id}>
-      <Radio.Group onChange={props.onChange} value={props.value} optionType="button" options={
-        [
-          { label: "Active", value: "active" },
-          { label: "Inactive", value: "inactive" },
-        ]
-      } />
-    </span>
-  }
-
   return (
     <ConfigProvider
       theme={{
@@ -105,7 +88,7 @@ const TableWithFilters = (props: MyTableProps) => {
               {item.type === "TreeSelect" && <Filter.TreeFilter {...item} />}
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
-              {item.type === "Custom" && <Filter.CustomFilter {...item} />}
+              {(item.type === "Custom" && item.element) && <Filter.CustomFilter {...item} />}
               {item.type === "Tabs" && <Filter.TabsFilter {...item} />}
             </Col>
           ))}

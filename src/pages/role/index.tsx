@@ -25,7 +25,7 @@ const columns = [
   },
 ];
 
-const filters = [
+const filters: any = [
   { name: "Hidden", type: "Hidden", initialValue: "121212" },
   { name: "Input", label: "Input", type: "Input" },
   {

@@ -9,7 +9,7 @@ import {
   HiddenFilterProps,
   CustomFilterProps,
   TabsFilterProps,
-  FilterItemProps,
+  FILTER_ITEM_TYPE,
 } from "./type";
 import React from "react";
 
@@ -183,7 +183,7 @@ const CustomFilter = (props: CustomFilterProps) => {
   // 返回一个 Form.Item 组件，其中 otherProps 用于配置 Form.Item 的属性，span 元素用于展示 element 属性指定的 React 元素
   return (
     <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
-      {React.createElement(element)}
+      {element && React.createElement(element)}
     </Form.Item>
   );
 };
@@ -197,6 +197,18 @@ const TabsFilter = (props: TabsFilterProps) => {
     </Form.Item>
   )
 }
+
+export const Span: Record<FILTER_ITEM_TYPE, number> = {
+  Hidden: 0,
+  Input: 6,
+  Select: 6,
+  TreeSelect: 6,
+  DatePicker: 6,
+  RangePicker: 10,
+  Custom: 6,
+  Tabs: 24
+}
+
 
 export default {
   HiddenFilter,

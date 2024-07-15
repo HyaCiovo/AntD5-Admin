@@ -1,4 +1,5 @@
 import type { TableProps, GetProp, PaginationProps } from "antd";
+import { FILTER_ITEM_TYPE } from "./filter/type";
 export interface Result {
   total: number;
   list: any[];
@@ -13,5 +14,5 @@ export interface MyTableProps extends TableProps {
   showQuickJumper?: GetProp<PaginationProps, "showQuickJumper">;
   fetchData: (params: any) => Promise<Result>;
   exportFn?: () => Promise<any>;
-  filters: any[];
+  filters: { type: FILTER_ITEM_TYPE; [key: string]: any }[];
 }
