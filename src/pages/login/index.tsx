@@ -11,7 +11,7 @@ const Login = () => {
 
   const { run, loading } = useRequest(signIn, {
     onSuccess: () => {
-      message.success("Sign in successful.", 3);
+      message.success("Sign in successful.", 2);
       refresh();
       navigate("/", { replace: true });
     },

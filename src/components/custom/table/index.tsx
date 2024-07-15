@@ -60,6 +60,7 @@ const TableWithFilters = (props: MyTableProps) => {
   const Span: Record<string, number> = {
     RangePicker: 10,
     Hidden: 0,
+    TabsFilter: 24,
   };
 
   const Custom = (props: any) => {
@@ -105,7 +106,7 @@ const TableWithFilters = (props: MyTableProps) => {
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
               {item.type === "Custom" && <Filter.CustomFilter {...item} />}
-              {item.type === "TabsFilter" && <Filter.TabsFilter {...item} />}
+              {item.type === "Tabs" && <Filter.TabsFilter {...item} />}
             </Col>
           ))}
         </Row>

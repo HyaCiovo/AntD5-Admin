@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Radio, Select, TreeSelect } from "antd";
+import { DatePicker, Form, FormInstance, Input, Radio, Select, TreeSelect } from "antd";
 import dayjs from "dayjs";
 import {
   DateFilterProps,
@@ -9,6 +9,7 @@ import {
   HiddenFilterProps,
   CustomFilterProps,
   TabsFilterProps,
+  FilterItemProps,
 } from "./type";
 import React from "react";
 
@@ -201,9 +202,9 @@ export default {
   HiddenFilter,
   InputFilter,
   SelectFilter,
+  TreeFilter,
   DateFilter,
   RangeFilter,
-  TreeFilter,
   CustomFilter,
   TabsFilter,
 };

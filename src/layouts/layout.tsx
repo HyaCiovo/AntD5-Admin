@@ -1,4 +1,4 @@
-import { Button, ConfigProvider, Flex, Layout } from "antd";
+import { App, Button, ConfigProvider, Flex, Layout } from "antd";
 import MyHeader from "./header";
 import { useEffect, useRef, useState } from "react";
 import SiderMenu from "./sider-menu";
@@ -21,11 +21,13 @@ const LayoutComponent = () => {
   const { headerBtns } = useNormalLayoutStore();
   const [show, setShow] = useState(false);
   const { setUser } = useUserStore();
+  const { message } = App.useApp()
 
   const loaderData = useLoaderData() as Partial<User>;
 
   useEffect(() => {
     setUser(loaderData);
+    loaderData.username && message.success(`Welcome back, ${loaderData.username}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -87,9 +89,8 @@ const LayoutComponent = () => {
           >
             <SiderMenu />
             <div
-              className={`fixed top-16 z-[99999] bottom-0 w-4 left-[212px] ${
-                collapsed ? "-translate-x-[148px]" : "translate-x-0"
-              }`}
+              className={`fixed top-16 z-[99999] bottom-0 w-4 left-[212px] ${collapsed ? "-translate-x-[148px]" : "translate-x-0"
+                }`}
               ref={controllerRef}
             >
               {show && (

@@ -75,8 +75,7 @@ const filters = [
     name: "TabsFilter",
     label: "TabsFilter",
     // className: "mt-8",
-    type: "TabsFilter",
-    span: 24,
+    type: "Tabs",
     initialValue: "male",
     options: [
       {
