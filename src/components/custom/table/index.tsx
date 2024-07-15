@@ -1,10 +1,10 @@
 import { filterObjects } from "@/utils";
-import { useAntdTable, useSize } from "ahooks";
+import { useAntdTable, useSize, useUpdateEffect } from "ahooks";
 import { Table, Button, Col, ConfigProvider, Form, Row } from "antd";
 import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import Filter, { Span } from "./filter";
+import { renderFilterItem, Span } from "./filter";
 
 const TableWithFilters = (props: MyTableProps) => {
   const {
@@ -22,6 +22,7 @@ const TableWithFilters = (props: MyTableProps) => {
   const [form] = Form.useForm();
   const [showCollapsed, setShowCollapsed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [transition, setTransition] = useState(false)
 
   const size = useSize(document.querySelector("#filters"));
 
@@ -30,12 +31,16 @@ const TableWithFilters = (props: MyTableProps) => {
     // 如果size不存在或已显示为折叠状态，则不进行后续逻辑
     if (!size || showCollapsed) return;
     // 如果size的高度大于120，则将显示状态和实际折叠状态都设置为true
-    if (size?.height > 120) {
+    if (size?.height > 82) {
       setShowCollapsed(true);
       setCollapsed(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
+
+  useUpdateEffect(() => {
+    setTransition(true)
+  }, [showCollapsed])
 
   const getTableData = async (
     { current, pageSize }: { current: number; pageSize: number },
@@ -74,22 +79,17 @@ const TableWithFilters = (props: MyTableProps) => {
         <Row
           gutter={16}
           id="filters"
-          className={`w-[74%] ${collapsed && "h-20"} overflow-y-hidden`}
+          className={`w-[74%] ${!showCollapsed ? "max-h-[83px]" : collapsed ? "max-h-[82px]" : "max-h-[250px]"} overflow-y-hidden`}
+          style={{ transition: transition ? "max-height 0.2s linear" : "" }}
         >
           {filters.map((item) => (
             <Col
               span={item.span || Span[item.type] || 6}
               key={item.name}
+              className="h-[82px]"
               hidden={item.type === "Hidden"}
             >
-              {item.type === "Hidden" && <Filter.HiddenFilter {...item} />}
-              {item.type === "Input" && <Filter.InputFilter {...item} />}
-              {item.type === "Select" && <Filter.SelectFilter {...item} />}
-              {item.type === "TreeSelect" && <Filter.TreeFilter {...item} />}
-              {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
-              {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
-              {(item.type === "Custom" && item.element) && <Filter.CustomFilter {...item} />}
-              {item.type === "Radio" && <Filter.RadioFilter {...item} />}
+              {renderFilterItem(item)}
             </Col>
           ))}
         </Row>

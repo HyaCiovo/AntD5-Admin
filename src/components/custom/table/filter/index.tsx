@@ -209,14 +209,18 @@ export const Span: Record<FILTER_ITEM_TYPE, number> = {
   Radio: 24
 }
 
-
-export default {
-  HiddenFilter,
-  InputFilter,
-  SelectFilter,
-  TreeFilter,
-  DateFilter,
-  RangeFilter,
-  CustomFilter,
-  RadioFilter,
-};
+export const renderFilterItem = (item: {
+  [key: string]: any;
+  type: FILTER_ITEM_TYPE;
+}) => {
+  return (<>
+    {item.type === "Hidden" && <HiddenFilter {...item} />}
+    {item.type === "Input" && <InputFilter {...item} />}
+    {item.type === "Select" && <SelectFilter {...item} />}
+    {item.type === "TreeSelect" && <TreeFilter {...item} />}
+    {item.type === "DatePicker" && <DateFilter {...item} />}
+    {item.type === "RangePicker" && <RangeFilter {...item} />}
+    {(item.type === "Custom" && item.element) && <CustomFilter {...item} />}
+    {item.type === "Radio" && <RadioFilter {...item} />}
+  </>)
+}
