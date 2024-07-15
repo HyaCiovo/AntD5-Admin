@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Select, TreeSelect } from "antd";
+import { DatePicker, Form, Input, Radio, Select, TreeSelect } from "antd";
 import dayjs from "dayjs";
 import {
   DateFilterProps,
@@ -8,6 +8,7 @@ import {
   TreeFilterProps,
   HiddenFilterProps,
   CustomFilterProps,
+  TabsFilterProps,
 } from "./type";
 import React from "react";
 
@@ -29,12 +30,10 @@ const HiddenFilter = (props: HiddenFilterProps) => {
  * @returns 返回一个封装了Input和Form.Item的组件，提供带清除功能的输入框。
  */
 const InputFilter = (props: InputFilterProps) => {
-  // 解构props，提取placeholder和其他属性
   const { placeholder, ...otherProps } = props;
 
-  // 返回一个Form.Item组件，其中包含一个Input输入框，Input输入框具有placeholder和allowClear属性
   return (
-    <Form.Item {...otherProps}>
+    <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
       <Input
         placeholder={placeholder || `Enter ${otherProps.label}`}
         allowClear
@@ -57,14 +56,10 @@ const InputFilter = (props: InputFilterProps) => {
  * @returns 返回一个封装了下拉选择框的表单项组件。
  */
 const SelectFilter = (props: SelectFilterProps) => {
-  // 解构props，提取出placeholder、onChange、options以及其他剩余属性
   const { placeholder, onChange, options, ...otherProps } = props;
 
-  // 返回一个Form.Item组件，其中包含一个Select组件
-  // Form.Item用于表单中的字段包装，提供校验、样式控制等功能
-  // Select组件是一个下拉选择框，允许用户从一组选项中进行选择
   return (
-    <Form.Item {...otherProps}>
+    <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
       <Select
         className="text-left"
         placeholder={placeholder || `Select ${otherProps.label}`}
@@ -92,7 +87,7 @@ const SelectFilter = (props: SelectFilterProps) => {
 const TreeFilter = (props: TreeFilterProps) => {
   const { placeholder, onChange, treeData, ...otherProps } = props;
   return (
-    <Form.Item {...otherProps}>
+    <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
       <TreeSelect
         className="text-left"
         placeholder={placeholder || `Select ${otherProps.label}`}
@@ -117,21 +112,16 @@ const TreeFilter = (props: TreeFilterProps) => {
  * @returns 返回一个 Form.Item 组件，其中包含一个 DatePicker 组件，用于日期选择。
  */
 const DateFilter = (props: DateFilterProps) => {
-  // 解构赋值，提取出 placeholder, onChange, format 以及其他的 props。
   const { placeholder, onChange, format = "YYYY-MM-DD", ...otherProps } = props;
-
   const normalizeValue = (value: any, format: any) =>
     value && dayjs(value).format(format);
 
   const getValueProps = (value: any) => value && dayjs(value).toDate();
-
-  // 返回一个 Form.Item 组件，该组件包含一个 DatePicker 组件。
-  // Form.Item 组件使用了传递进来的其他 props，并通过 getValueProps 和 normalize 方法进行值的处理。
-  // DatePicker 组件设置了 className, placeholder, allowClear, onChange 和 format 等属性，提供了日期选择、清除功能和格式化输出。
   return (
     <Form.Item
       {...otherProps}
       getValueProps={getValueProps}
+      className={`text-left ${otherProps.className}`}
       normalize={(value) => normalizeValue(value, format)}
     >
       <DatePicker
@@ -153,24 +143,18 @@ const DateFilter = (props: DateFilterProps) => {
  * @returns 返回一个Form.Item组件，其中嵌套了一个DatePicker.RangePicker组件，用于选择日期范围。
  */
 const RangeFilter = (props: DateRangeFilterProps) => {
-  // 解构props中的placeholder、onChange和format属性，并为format提供默认值"YYYY-MM-DD"。
-  // 其他属性通过...otherProps收集，将传递给Form.Item组件。
   const { placeholder, onChange, format = "YYYY-MM-DD", ...otherProps } = props;
-
   const normalizeValue = (value: any, format: any) =>
     value && [dayjs(value[0]).format(format), dayjs(value[1]).format(format)];
-
   const getValueProps = (value: any) =>
     value && [dayjs(value[0]).toDate(), dayjs(value[1]).toDate()];
 
-  // 返回一个Form.Item组件，该组件使用了收集到的其他属性。
   // Form.Item通过getValueProps和normalize来处理日期选择器的值获取和格式化。
-  // 在Form.Item内部，使用DatePicker.RangePicker组件来实际显示日期选择器。
-  // DatePicker.RangePicker允许用户清除选择，并根据props中的format属性格式化显示日期。
   return (
     <Form.Item
       {...otherProps}
       getValueProps={getValueProps}
+      className={`text-left ${otherProps.className}`}
       normalize={(value) => normalizeValue(value, format)}
     >
       <DatePicker.RangePicker
@@ -183,14 +167,35 @@ const RangeFilter = (props: DateRangeFilterProps) => {
   );
 };
 
+/**
+ * CustomFilter 是一个自定义过滤器组件。
+ * 
+ * 该组件接受一个包含元素和其他属性的 props 对象，并渲染一个表单项（Form.Item）。
+ * 其中，元素（element）属性用于指定要创建的 React 元素，其他属性（otherProps）则会传递给 Form.Item 组件。
+ * 
+ * @param props CustomFilterProps 类型的对象，包含 element 和其他任意属性。
+ * @returns 返回一个 Form.Item 组件，其中包含一个带有指定 id 的 span 元素，该 span 元素的内容是通过 element 属性创建的 React 元素。
+ */
 const CustomFilter = (props: CustomFilterProps) => {
+  // 解构 props，提取 element 属性，并将其他属性打包到 otherProps 中
   const { element, ...otherProps } = props;
+  // 返回一个 Form.Item 组件，其中 otherProps 用于配置 Form.Item 的属性，span 元素用于展示 element 属性指定的 React 元素
   return (
-    <Form.Item {...otherProps}>
-      <span id={otherProps.name}>{React.createElement(element)}</span>
+    <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
+      {React.createElement(element)}
     </Form.Item>
   );
 };
+
+const TabsFilter = (props: TabsFilterProps) => {
+  const { options, optionType = "button", ...otherProps } = props
+
+  return (
+    <Form.Item {...otherProps} className={`text-left ${otherProps.className}`}>
+      <Radio.Group optionType={optionType} options={options} />
+    </Form.Item>
+  )
+}
 
 export default {
   HiddenFilter,
@@ -200,4 +205,5 @@ export default {
   RangeFilter,
   TreeFilter,
   CustomFilter,
+  TabsFilter,
 };

@@ -1,6 +1,6 @@
 import { filterObjects } from "@/utils";
 import { useAntdTable, useSize } from "ahooks";
-import { Table, Button, Col, ConfigProvider, Form, Row } from "antd";
+import { Table, Button, Col, ConfigProvider, Form, Row, Radio } from "antd";
 import { MyTableProps, Result } from "./type";
 import { DownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -62,6 +62,17 @@ const TableWithFilters = (props: MyTableProps) => {
     Hidden: 0,
   };
 
+  const Custom = (props: any) => {
+    return <span id={props.id}>
+      <Radio.Group onChange={props.onChange} value={props.value} optionType="button" options={
+        [
+          { label: "Active", value: "active" },
+          { label: "Inactive", value: "inactive" },
+        ]
+      } />
+    </span>
+  }
+
   return (
     <ConfigProvider
       theme={{
@@ -94,6 +105,7 @@ const TableWithFilters = (props: MyTableProps) => {
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
               {item.type === "Custom" && <Filter.CustomFilter {...item} />}
+              {item.type === "TabsFilter" && <Filter.TabsFilter {...item} />}
             </Col>
           ))}
         </Row>
@@ -147,7 +159,7 @@ const TableWithFilters = (props: MyTableProps) => {
           showTotal,
         }}
       />
-    </ConfigProvider>
+    </ConfigProvider >
   );
 };
 

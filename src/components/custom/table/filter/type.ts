@@ -4,6 +4,7 @@ import type {
   TreeSelectProps,
   DatePickerProps,
   InputProps,
+  RadioGroupProps,
 } from "antd";
 import type { RangePickerProps } from "antd/lib/date-picker";
 
@@ -13,7 +14,8 @@ export type FILTER_ITEM_PROPS =
   | SelectProps
   | DatePickerProps
   | RangePickerProps
-  | TreeSelectProps;
+  | TreeSelectProps
+  | RadioGroupProps;
 
 export type FILTER_ITEM_TYPE =
   | "Hidden"
@@ -21,7 +23,9 @@ export type FILTER_ITEM_TYPE =
   | "Select"
   | "DatePicker"
   | "RangePicker"
-  | "TreeSelect";
+  | "TreeSelect"
+  | "Custom"
+  | "Tabs";
 
 export type BaseFilterProps<T extends FILTER_ITEM_PROPS> = FormItemProps &
   Omit<T, keyof FormItemProps> & {
@@ -29,19 +33,32 @@ export type BaseFilterProps<T extends FILTER_ITEM_PROPS> = FormItemProps &
     span?: number;
   };
 
-export interface InputFilterProps extends BaseFilterProps<InputProps> { }
+export interface InputFilterProps extends BaseFilterProps<InputProps> {}
 
-export interface HiddenFilterProps extends Omit<BaseFilterProps<InputProps>, "placeholder"> { }
+export interface HiddenFilterProps
+  extends Omit<BaseFilterProps<InputProps>, "placeholder"> {}
 
-export interface SelectFilterProps extends BaseFilterProps<SelectProps> { }
+export interface SelectFilterProps extends BaseFilterProps<SelectProps> {}
 
-export interface TreeFilterProps extends BaseFilterProps<TreeSelectProps> { }
+export interface TreeFilterProps extends BaseFilterProps<TreeSelectProps> {}
 
-export interface DateFilterProps extends BaseFilterProps<DatePickerProps> { }
+export interface DateFilterProps extends BaseFilterProps<DatePickerProps> {}
 
 export interface CustomFilterProps extends FormItemProps {
-  element: (props: Partial<{ onChange?: (value: any) => void, value?: any }>) => JSX.Element
+  element: (
+    props: Partial<{
+      onChange?: (value: any) => void;
+      value?: any;
+      /**
+       * 传递 id 属性到 dom 以支持 scrollToField 方法。 
+       * *此处默认不需要支持。
+       */
+      id?: string;
+    }>
+  ) => JSX.Element;
 }
 
+export interface TabsFilterProps extends BaseFilterProps<RadioGroupProps> {}
+
 export interface DateRangeFilterProps
-  extends BaseFilterProps<RangePickerProps> { }
+  extends BaseFilterProps<RangePickerProps> {}

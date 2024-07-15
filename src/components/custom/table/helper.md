@@ -57,7 +57,7 @@ const TablePage = () => {
   > - 提供 `onChange` 事件或 [`trigger`](https://ant.design/components/form-cn#formitem) 的值同名的事件。
   > - 转发 ref 或者传递 id 属性到 dom 以支持 `scrollToField` 方法。
 
-- [ ] TabsFilter
+- [x] TabsFilter
 
   > Tabs 组实现过滤条件的选择，参考现有产品：
   >

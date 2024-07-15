@@ -4,7 +4,7 @@ import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";
 import { BtnProps } from "@/stores/layout";
 import { ExportOutlined, UserAddOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import { Badge, Input } from "antd";
 
 const columns = [
   {
@@ -69,10 +69,30 @@ const filters = [
     label: "Custom",
     type: "Custom",
     span: 10,
-    element: (props: any) => (
-      <Input onChange={props.onChange} value={props.value} />
-    ),
+    element: (props: any) => <Input onChange={props.onChange} value={props.value} />,
   },
+  {
+    name: "TabsFilter",
+    label: "TabsFilter",
+    // className: "mt-8",
+    type: "TabsFilter",
+    span: 24,
+    initialValue: "male",
+    options: [
+      {
+        value: "all",
+        label: "All",
+      },
+      {
+        value: "male",
+        label: <>Male<Badge className="ml-2" count={10} /></>,
+      },
+      {
+        value: "female",
+        label: "Female",
+      },
+    ]
+  }
 ];
 
 const Component = () => {
@@ -112,7 +132,7 @@ const Component = () => {
       filters={filters}
       rowKey={(record: any) => record.email}
       fetchData={fetchData}
-      // exportFn={async() => {}}
+    // exportFn={async() => {}}
     />
   );
 };
