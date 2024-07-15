@@ -8,7 +8,7 @@ import {
   TreeFilterProps,
   HiddenFilterProps,
   CustomFilterProps,
-  TabsFilterProps,
+  RadioFilterProps,
   FILTER_ITEM_TYPE,
 } from "./type";
 import React from "react";
@@ -188,7 +188,7 @@ const CustomFilter = (props: CustomFilterProps) => {
   );
 };
 
-const TabsFilter = (props: TabsFilterProps) => {
+const RadioFilter = (props: RadioFilterProps) => {
   const { options, optionType = "button", ...otherProps } = props
 
   return (
@@ -206,7 +206,7 @@ export const Span: Record<FILTER_ITEM_TYPE, number> = {
   DatePicker: 6,
   RangePicker: 10,
   Custom: 6,
-  Tabs: 24
+  Radio: 24
 }
 
 
@@ -218,5 +218,5 @@ export default {
   DateFilter,
   RangeFilter,
   CustomFilter,
-  TabsFilter,
+  RadioFilter,
 };

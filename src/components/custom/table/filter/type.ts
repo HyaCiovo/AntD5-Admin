@@ -25,7 +25,7 @@ export type FILTER_ITEM_TYPE =
   | "RangePicker"
   | "TreeSelect"
   | "Custom"
-  | "Tabs";
+  | "Radio";
 
 export type BaseFilterProps<T extends FILTER_PROPS> = FormItemProps &
   Omit<T, keyof FormItemProps> & {
@@ -60,7 +60,7 @@ export interface CustomFilterProps extends FormItemProps {
   ) => JSX.Element;
 }
 
-export interface TabsFilterProps extends BaseFilterProps<RadioGroupProps> {}
+export interface RadioFilterProps extends BaseFilterProps<RadioGroupProps> {}
 
 export interface DateRangeFilterProps
   extends BaseFilterProps<RangePickerProps> {}
@@ -73,4 +73,4 @@ export type FilterItemProps =
   | DateRangeFilterProps
   | HiddenFilterProps
   | CustomFilterProps
-  | TabsFilterProps;
+  | RadioFilterProps;

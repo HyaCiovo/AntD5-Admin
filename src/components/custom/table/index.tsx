@@ -89,7 +89,7 @@ const TableWithFilters = (props: MyTableProps) => {
               {item.type === "DatePicker" && <Filter.DateFilter {...item} />}
               {item.type === "RangePicker" && <Filter.RangeFilter {...item} />}
               {(item.type === "Custom" && item.element) && <Filter.CustomFilter {...item} />}
-              {item.type === "Tabs" && <Filter.TabsFilter {...item} />}
+              {item.type === "Radio" && <Filter.RadioFilter {...item} />}
             </Col>
           ))}
         </Row>

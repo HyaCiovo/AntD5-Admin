@@ -72,10 +72,9 @@ const filters: any = [
     element: (props: any) => <Input onChange={props.onChange} value={props.value} />,
   },
   {
-    name: "TabsFilter",
-    label: "TabsFilter",
-    // className: "mt-8",
-    type: "Tabs",
+    name: "RadioFilter",
+    label: "RadioFilter",
+    type: "Radio",
     initialValue: "male",
     options: [
       {

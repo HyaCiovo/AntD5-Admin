@@ -1,27 +1,79 @@
-# TableWithFilters
+# Generate TableWithFilters
 
-> 基于 [Ant Design 5.0](https://ant.design/index-cn) 组件库，使用 json 数组直接生成带有过滤条件的 Table 组件。
+> Based on the [Ant Design 5.0](https://ant.design/index-cn) component library，this generates a Table component directly from a JSON array with filtering capabilities.
 >
-> 过滤条件、数据请求和数据展示通过 [useAntdTable - ahooks 3.0](https://ahooks.js.org/zh-CN/hooks/use-antd-table) 实现。
+> Filtering conditions, data requests, and data presentation are realized through [useAntdTable - ahooks 3.0](https://ahooks.js.org/zh-CN/hooks/use-antd-table).
 
-## 代码示例
+## Code Example
 
 ```tsx
-const filters = [
-  { name: "id", label: "ID", type: "Input" },
+const filters: any = [
+  { name: "Hidden", type: "Hidden", initialValue: "121212" },
+  { name: "Input", label: "Input", type: "Input" },
   {
-    name: "gender", label: "性别", type: "Select", initialValue: "",
+    name: "Select",
+    label: "Select",
+    type: "Select",
+    initialValue: "all",
     options: [
-      { value: "", label: "全部" },
-      { value: "male", label: "男" },
-      { value: "female", label: "女" },
-    ]
+      { value: "all", label: "All" },
+      { value: "male", label: "Male" },
+      { value: "female", label: "Female" },
+      { value: "other", label: "Other" },
+    ],
   },
-  { name: "name", label: "姓名", type: "Input" },
-  { name: "email", label: "邮箱", type: "Input" },
-  { name: "phone", label: "手机号码", type: "Input" },
-  { name: "birthdate", label: "出生日期", type: "RangePicker", format: "YYYY-MM-DD" },
-]
+  {
+    name: "TreeSelect",
+    label: "TreeSelect",
+    type: "TreeSelect",
+    treeData: [
+      {
+        title: "Light",
+        value: "light",
+        children: [{ title: "Bamboo", value: "bamboo" }],
+      },
+    ],
+  },
+  {
+    name: "DatePicker",
+    label: "DatePicker",
+    type: "DatePicker",
+    format: "YYYY-MM-DD",
+  },
+  {
+    name: "RangePicker",
+    label: "RangePicker",
+    type: "RangePicker",
+    format: "YYYY-MM-DD",
+  },
+  {
+    name: "Custom",
+    label: "Custom",
+    type: "Custom",
+    span: 10,
+    element: (props: any) => <Input onChange={props.onChange} value={props.value} />,
+  },
+  {
+    name: "Radio",
+    label: "RadioFilter",
+    type: "Radio",
+    initialValue: "male",
+    options: [
+      {
+        value: "all",
+        label: "All",
+      },
+      {
+        value: "male",
+        label: <>Male<Badge className="ml-2" count={10} /></>,
+      },
+      {
+        value: "female",
+        label: "Female",
+      },
+    ]
+  }
+];
 
 const TablePage = () => {
     return (<Table
@@ -32,35 +84,54 @@ const TablePage = () => {
     } />)
 }
 ```
+## Effect
 
-<img src="../../../assets/images/demo/image-20240710163624526.png" alt="image" style="zoom: 50%;" />
+![image-20240715160003122](./helper.assets/image-20240715160003122.png)
 
-## 当前支持的 FilterItem
+## Currently Supported FilterItem
+
+> The span attribute can control the width of the form items, specifically referencing Ant Design's [Grid](https://ant.design/components/grid-cn/#components-grid-demo-basic) component.
+>
+> Default span for each Filter component:
+>
+> ```ts
+> export const Span: Record<FILTER_ITEM_TYPE, number> = {
+>   	Hidden: 0,
+>   	Input: 6,
+>   	Select: 6,
+>   	TreeSelect: 6,
+>   	DatePicker: 6,
+>   	RangePicker: 10,
+>   	Custom: 6,
+>   	Radio: 24
+> }
+> ```
+
+
+
+### Basic Components
+
 
 1. InputFilter
 2. SelectFilter
 3. DateFilter
 4. RangeFilter
 5. TreeFilter
+6. RadioFilter
 
-## 待扩展
+> These components are simple extensions of the regular [Form]([Form - Ant Design](https://ant.design/components/form)).Item.
 
-- [x] HiddenFilter
 
-  > 不会在页面上显示的过滤条件。
 
-- [x] CustomFilter
+### Special Components
 
-  > 自定义过滤控件。参考 Ant Design 的自定义表单控件实现
-  >
-  > - 提供受控属性 `value` 或其它与 [`valuePropName`](https://ant.design/components/form-cn#formitem) 的值同名的属性。
-  > - 提供 `onChange` 事件或 [`trigger`](https://ant.design/components/form-cn#formitem) 的值同名的事件。
-  > - 转发 ref 或者传递 id 属性到 dom 以支持 `scrollToField` 方法。
 
-- [x] TabsFilter
+1. HiddenFilter
 
-  > Tabs 组实现过滤条件的选择，参考现有产品：
-  >
-  > ![image-20240710171001684](../../../assets/images/demo/image-20240710171001684.png)
-  >
-  > 预期实现 Badge 徽标
+   > A Hidden FilterItem directly inserts the corresponding name parameter and value into the filtering conditions, which are then included in the API request parameters. In most cases, you may not need to use this component. Modifying the request method directly might be a better choice for you.
+
+2. CustomFilter
+
+   > A Custom FilterItem allows for custom filter components.
+   >
+   > Refer to [customized-form-controls](https://ant.design/components/form-cn#components-form-demo-customized-form-controls) for implementation.

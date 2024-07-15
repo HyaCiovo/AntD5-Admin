@@ -110,7 +110,7 @@ const LayoutComponent = () => {
             </div>
           </Sider>
           <Layout>
-            <Header className="bg-white flex items-center justify-between p-4">
+            <Header className="bg-white flex items-center justify-between p-4 border-b border-b-solid border-b-[#f0f0f0]">
               <MyBreadcrumbs />
               <Flex gap="small" align="end">
                 {headerBtns.length > 0 && renderBtns(headerBtns)}
