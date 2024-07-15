@@ -74,7 +74,10 @@ const TableWithFilters = (props: MyTableProps) => {
         <Row
           gutter={16}
           id="filters"
-          className={`w-[74%] ${collapsed && "h-20 overflow-hidden"}`}
+          className={`w-[74%] ${collapsed ? "max-h-20" : "max-h-[250px]"} overflow-y-hidden`}
+          style={{
+            transition: "max-height 0.25s linear",
+          }}
         >
           {filters.map((item) => (
             <Col
