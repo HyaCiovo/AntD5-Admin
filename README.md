@@ -1,6 +1,6 @@
 # Antd Admin Template
 
-<img src="public/logo.png" alt="image" style="zoom: 70%;" />
+<img src="public/favicon.png" alt="image" style="zoom: 70%;" />
 
 > - node >= 18.15.0
 > - npm >= 9.5.0
