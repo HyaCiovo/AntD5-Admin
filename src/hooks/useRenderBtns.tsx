@@ -9,7 +9,7 @@ import { useEffect } from "react";
  *
  * @param Buttons 按钮属性数组，包含所有头部按钮的配置。
  */
-export const useHeaderBtns = (Buttons: BtnProps[]) => {
+export const useHeaderBtns = (Buttons: Array<BtnProps>) => {
   // 从`useNormalLayoutStore`中获取设置头部按钮的方法
   const { setHeaderBtns } = useNormalLayoutStore();
 
