@@ -1,4 +1,4 @@
-import { fetchUsers } from "@/apis/user-manage";
+import { getRoleInfo } from "@/apis/user-manage";
 import TableWithFilters from "@/components/custom/table";
 import { Result } from "@/components/custom/table/type";
 import { useHeaderBtns } from "@/hooks/useRenderBtns";
@@ -115,12 +115,10 @@ const Component = () => {
   useHeaderBtns(headerBtns);
 
   const fetchData = async (params?: any): Promise<Result> => {
-    const res = await fetchUsers(params);
-    // return { list: res.results, total: res.info.results };
+    const res = await getRoleInfo(params);
+
     return new Promise((resolve) => {
-      // setTimeout(() => {
       resolve({ list: res.results, total: res.info.results });
-      // }, 1500);
     });
   };
 
