@@ -86,7 +86,7 @@ const TablePage = () => {
 ```
 ## Effect
 
-![image-20240715160003122](./helper.assets/image-20240715160003122.png)
+![image-20240715160003122](./assets/image-20240715160003122.png)
 
 ## Currently Supported FilterItem
 
