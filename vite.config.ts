@@ -32,10 +32,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         "@": `${resolve(__dirname, "src")}`,
         config: `${resolve(__dirname, "config")}`,
       },
-      // 解析package.json中的字段
-      mainFields: ["module", "jsnext:main", "jsnext"],
+      // // 解析package.json中的字段
+      // mainFields: ["module", "jsnext:main", "jsnext", "browser"],
       // 导入时想要省略的扩展名列表
-      extensions: [".less", ".js", ".ts", ".jsx", ".tsx", ".json", ".scss"],
+      extensions: [".less", ".js", ".ts", ".jsx", ".tsx", ".json"],
     },
     json: {
       // 是否支持从 .json 文件中进行按名导入
